@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { Eye, EyeOff } from 'lucide-react';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -11,6 +12,7 @@ const Signup = () => {
   const [name, setName] = useState('');
   const [step, setStep] = useState(1); // 1 for email, 2 for password, 3 for name
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   
   const { signup, error, clearError } = useAuth();
   const navigate = useNavigate();
@@ -118,15 +120,22 @@ const Signup = () => {
             </form>
           ) : step === 2 ? (
             <form onSubmit={handlePasswordContinue} className="space-y-4">
-              <div>
+              <div className="relative">
                 <Input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full h-12 px-4 border border-gray-300 rounded-full focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full h-12 px-4 pr-12 border border-gray-300 rounded-full focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   required
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
               </div>
 
               <Button

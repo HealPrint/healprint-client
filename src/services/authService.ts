@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8001';
+const API_BASE_URL = 'https://healprint-server.onrender.com';
 
 export interface User {
   id: string;
