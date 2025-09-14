@@ -36,10 +36,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const clearError = () => setError(null);
 
   const login = async (credentials: LoginCredentials) => {
+    setIsLoading(true);
+    clearError();
+    
     try {
-      setIsLoading(true);
-      clearError();
-      
       const authResponse = await authService.login(credentials);
       authService.setToken(authResponse.access_token);
       
@@ -52,6 +52,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Login failed';
       setError(errorMessage);
+      console.error('Login error:', err);
       throw err;
     } finally {
       setIsLoading(false);

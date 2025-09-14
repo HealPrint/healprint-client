@@ -39,6 +39,9 @@ class AuthService {
 
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
     try {
+      console.log('Attempting login to:', `${this.baseUrl}/login`);
+      console.log('Credentials:', { email: credentials.email, password: '***' });
+      
       const response = await fetch(`${this.baseUrl}/login`, {
         method: 'POST',
         headers: {
@@ -47,12 +50,24 @@ class AuthService {
         body: JSON.stringify(credentials),
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+
       if (!response.ok) {
-        const error: ApiError = await response.json();
-        throw new Error(error.detail || 'Login failed');
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        
+        try {
+          const error: ApiError = JSON.parse(errorText);
+          throw new Error(error.detail || 'Login failed');
+        } catch (parseError) {
+          throw new Error(`Login failed: ${response.status} ${response.statusText}`);
+        }
       }
 
-      return await response.json();
+      const data = await response.json();
+      console.log('Login successful:', data);
+      return data;
     } catch (error) {
       console.error('Login error:', error);
       throw error;

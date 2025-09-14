@@ -10,10 +10,9 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [step, setStep] = useState(1); // 1 for email, 2 for password
-  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   
-  const { login, error, clearError } = useAuth();
+  const { login, error, clearError, isLoading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -26,7 +25,6 @@ const Login = () => {
 
   const handlePasswordLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     clearError();
 
     try {
@@ -42,8 +40,6 @@ const Login = () => {
         description: err instanceof Error ? err.message : 'Login failed',
         variant: "destructive",
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
