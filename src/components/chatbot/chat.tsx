@@ -11,7 +11,16 @@ import { useChat } from "../../hooks/chat";
 
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const { messages, isLoading, sendMessage, clearChat } = useChat();
+  const { 
+    messages, 
+    isLoading, 
+    sendMessage, 
+    clearChat, 
+    currentConversationId,
+    assessmentStage,
+    symptomsCollected,
+    needsDiagnosis
+  } = useChat();
   const resultsEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -194,8 +203,8 @@ const HomePage = () => {
                   {message.role === 'assistant' && (
                     <div className="prose prose-gray max-w-none">
                       <div className="flex items-start space-x-3 py-4">
-                        <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                          <span className="text-white text-xs font-bold">HP</span>
+                        <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1">
+                          {/* Empty space - no icon for completed messages */}
                         </div>
                         <div className="flex-1">
                           <div className="text-gray-900 leading-relaxed whitespace-pre-wrap">
@@ -212,8 +221,12 @@ const HomePage = () => {
               {isLoading && (
                 <div className="mb-8">
                   <div className="flex items-start space-x-3 py-4">
-                    <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-md flex items-center justify-center flex-shrink-0">
-                      <Loader2 className="w-4 h-4 text-white animate-spin" />
+                    <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="flex space-x-1">
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                      </div>
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center space-x-2 text-gray-600">

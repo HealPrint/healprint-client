@@ -2,14 +2,43 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-const SettingsPage = () => (
-  <div className="h-full overflow-y-auto scrollbar-thin smooth-scroll">
-    <div className="p-6 space-y-6 max-w-4xl mx-auto">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Settings & Profile</h1>
-        <p className="text-gray-600">Manage your account, preferences, and health profile</p>
-      </div>
+const SettingsPage = () => {
+  const { logout, user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
+  return (
+    <div className="h-full overflow-y-auto scrollbar-thin smooth-scroll">
+      <div className="p-6 space-y-6 max-w-4xl mx-auto">
+        <div className="mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">Settings & Profile</h1>
+              <p className="text-gray-600">Manage your account, preferences, and health profile</p>
+            </div>
+            <div className="flex items-center space-x-4">
+              {user && (
+                <span className="text-sm text-gray-600">
+                  Welcome, {user.name}
+                </span>
+              )}
+              <Button
+                onClick={handleLogout}
+                variant="outline"
+                className="rounded-full"
+              >
+                Logout
+              </Button>
+            </div>
+          </div>
+        </div>
       
       <div className="grid gap-6">
         {/* Profile Section */}
@@ -128,6 +157,7 @@ const SettingsPage = () => (
       </div>
     </div>
   </div>
-);
+  );
+};
 
 export default SettingsPage;

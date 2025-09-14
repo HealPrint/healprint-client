@@ -1,72 +1,154 @@
-import OpenAI from 'openai';
+// HealPrint AI Backend Service Integration
+import { getApiUrl } from '../config';
 
-
-// Initialize OpenAI client with OpenRouter configuration
-const openai = new OpenAI({
-  baseURL: 'https://openrouter.ai/api/v1',
-  apiKey: import.meta.env.VITE_OPENROUTER_API_KEY,
-  defaultHeaders: {
-    'HTTP-Referer': import.meta.env.VITE_SITE_URL,
-    'X-Title': import.meta.env.VITE_SITE_NAME,
-  },
-  dangerouslyAllowBrowser: true, // Required for client-side usage
-});
+const API_BASE_URL = getApiUrl();
 
 export interface ChatMessage {
-  role: 'system' | 'user' | 'assistant';
+  role: 'user' | 'assistant';
   content: string;
+  timestamp?: string;
 }
 
 export interface ChatResponse {
-  content: string;
+  response: string;
+  conversation_id: string;
+  message_id: string;
+  assessment_stage: string;
+  symptoms_collected: Record<string, any>;
+  needs_diagnosis: boolean;
   error?: string;
 }
 
-export class OpenAIService {
-  static async sendMessage(
-    messages: ChatMessage[],
-    model: string = 'deepseek/deepseek-chat'
-  ): Promise<ChatResponse> {
+export interface ConversationHistory {
+  conversation_id: string;
+  messages: Array<{
+    id: string;
+    user_message: string;
+    ai_response: string;
+    timestamp: string;
+  }>;
+}
+
+export class HealPrintService {
+  private static userId = 'user_' + Math.random().toString(36).substr(2, 9);
+  private static currentConversationId: string | null = null;
+  
+  // Initialize user ID once and keep it consistent
+  static {
+    // Try to get existing user ID from localStorage, or create new one
+    const storedUserId = localStorage.getItem('healprint_user_id');
+    if (storedUserId) {
+      this.userId = storedUserId;
+    } else {
+      localStorage.setItem('healprint_user_id', this.userId);
+    }
+    
+    // Try to get existing conversation ID from localStorage
+    const storedConversationId = localStorage.getItem('healprint_conversation_id');
+    if (storedConversationId) {
+      this.currentConversationId = storedConversationId;
+    }
+  }
+
+  static async sendMessage(message: string): Promise<ChatResponse> {
     try {
-      const completion = await openai.chat.completions.create({
-        model,
-        messages,
-        temperature: 0.7,
-        max_tokens: 2000,
+      const response = await fetch(`${API_BASE_URL}/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message,
+          user_id: this.userId
+        }),
       });
 
-      const content = completion.choices[0]?.message?.content;
-      
-      if (!content) {
-        throw new Error('No response content received');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      return { content };
+      const data = await response.json();
+      
+      // Store conversation ID for future use
+      this.currentConversationId = data.conversation_id;
+      localStorage.setItem('healprint_conversation_id', data.conversation_id);
+      
+      return data;
     } catch (error) {
-      console.error('OpenAI API Error:', error);
+      console.error('HealPrint API Error:', error);
       return {
-        content: '',
+        response: '',
+        conversation_id: '',
+        message_id: '',
+        assessment_stage: 'error',
+        symptoms_collected: {},
+        needs_diagnosis: false,
         error: error instanceof Error ? error.message : 'Unknown error occurred'
       };
     }
   }
 
-  static async processUserQuery(query: string): Promise<ChatResponse> {
-    const systemPrompt = `You are HealPrint AI, an intelligent health diagnostic assistant that helps people understand the connection between their skin/hair symptoms and internal health issues. You specialize in:
+  static async getConversationHistory(conversationId: string): Promise<ConversationHistory | null> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/conversation/${conversationId}`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-1. Skin & Hair Analysis - Analyzing symptoms like acne, hair loss, rashes, dryness
-2. Internal Health Connection - Linking external symptoms to potential internal causes (hormonal, nutritional, digestive, stress)
-3. Wellness Guidance - Providing safe, holistic health recommendations
-4. Product Safety - Recommending safe, natural alternatives to harsh chemicals
-5. Medical Referrals - Suggesting when to seek professional medical help
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching conversation history:', error);
+      return null;
+    }
+  }
 
-Always provide compassionate, culturally-sensitive responses. Focus on preventative health and safe practices. When in doubt, recommend consulting healthcare professionals.`;
+  static async analyzeConversation(conversationId: string): Promise<any> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/analyze/${conversationId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-    const messages: ChatMessage[] = [
-      { role: 'system', content: systemPrompt },
-      { role: 'user', content: query }
-    ];
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-    return this.sendMessage(messages);
+      return await response.json();
+    } catch (error) {
+      console.error('Error analyzing conversation:', error);
+      return null;
+    }
+  }
+
+  static async getConversationSummary(conversationId: string): Promise<any> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/conversation/${conversationId}/summary`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching conversation summary:', error);
+      return null;
+    }
+  }
+
+  static getCurrentConversationId(): string | null {
+    return this.currentConversationId;
+  }
+
+  static resetConversation(): void {
+    this.currentConversationId = null;
+    // Clear the conversation from localStorage
+    localStorage.removeItem('healprint_conversation_id');
+  }
+  
+  static getUserId(): string {
+    return this.userId;
   }
 }

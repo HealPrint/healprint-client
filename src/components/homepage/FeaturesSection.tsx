@@ -4,10 +4,7 @@ import {
   ArrowRight,
   Search,
   UserCheck,
-  Brain,
-  DollarSign,
-  Shield,
-  Send
+  Brain
 } from "lucide-react";
 
 const FeaturesSection = () => {
@@ -16,77 +13,194 @@ const FeaturesSection = () => {
       icon: Search,
       title: "Symptom Analysis",
       description: "AI-powered analysis of skin and hair symptoms to identify potential health connections",
-      gradient: "from-blue-500 to-purple-500"
+      gradient: "from-blue-500 to-purple-500",
+      image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop&crop=center&auto=format&q=80",
+      overlay: "Upload photos and get instant AI analysis"
     },
     {
       icon: UserCheck,
       title: "Expert Matching",
       description: "Connect with certified dermatologists, nutritionists, and health coaches",
-      gradient: "from-emerald-500 to-blue-500"
+      gradient: "from-emerald-500 to-blue-500",
+      image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=300&fit=crop&crop=center&auto=format&q=80",
+      overlay: "Connect with verified health professionals"
     },
     {
       icon: Brain,
       title: "Health Insights",
       description: "Deep analysis connecting external symptoms to internal health conditions",
-      gradient: "from-purple-500 to-pink-500"
+      gradient: "from-purple-500 to-pink-500",
+      image: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=400&h=300&fit=crop&crop=center&auto=format&q=80",
+      overlay: "Get deep insights into your health patterns"
     },
     {
-      icon: DollarSign,
+      icon: Search,
       title: "Product Recommendations",
       description: "Safe, personalized product suggestions based on your health profile",
-      gradient: "from-yellow-500 to-orange-500"
+      gradient: "from-orange-500 to-red-500",
+      image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop&crop=center&auto=format&q=80",
+      overlay: "Get personalized product suggestions"
     },
     {
-      icon: Shield,
+      icon: UserCheck,
       title: "Health Monitoring",
       description: "Track your wellness journey with personalized health reminders and tips",
-      gradient: "from-green-500 to-emerald-500"
+      gradient: "from-cyan-500 to-blue-500",
+      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&crop=center&auto=format&q=80",
+      overlay: "Track your health progress"
     },
     {
-      icon: Send,
+      icon: Brain,
       title: "Expert Consultations",
       description: "Book direct consultations with certified health professionals",
-      gradient: "from-blue-500 to-cyan-500"
+      gradient: "from-indigo-500 to-purple-500",
+      image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=400&h=300&fit=crop&crop=center&auto=format&q=80",
+      overlay: "Book professional consultations"
     }
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-br from-gray-50 to-blue-50/30">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-            Our Health AI Features
+    <>
+      <style jsx>{`
+        .scrollable-features::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollable-features {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
+      <section className="relative py-16 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-100/20 via-transparent to-transparent"></div>
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-green-400/10 to-blue-400/10 rounded-full blur-3xl"></div>
+      
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header Section */}
+        {/* <div className="text-left mb-24">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 border border-blue-200/50 mb-8">
+            <div className="w-2 h-2 bg-blue-500 rounded-full mr-3 animate-pulse"></div>
+            <span className="text-blue-700 font-medium text-sm">AI-Powered Health Platform</span>
+          </div>
+          <h2 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-900 to-gray-900 bg-clip-text text-transparent mb-8 leading-tight">
+            Advanced Health
+            <br />
+            <span className="text-blue-600">AI Features</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Six specialized AI-powered features working together to provide comprehensive health insights and guidance
+          <p className="text-xl text-gray-600 max-w-4xl leading-relaxed font-light">
+            Three cutting-edge AI-powered features working in harmony to deliver comprehensive health insights, 
+            personalized recommendations, and expert-level guidance for your wellness journey.
           </p>
+        </div> */}
+
+        {/* Modern Asymmetric Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-24">
+          {/* Hero Feature - Large Card */}
+          <div className="lg:col-span-7 group">
+            <div className="relative h-[400px] rounded-3xl overflow-hidden bg-white transition-all duration-700 cursor-pointer">
+              {/* Video Background */}
+              <div className="relative h-full">
+                <video 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline
+                  preload="metadata"
+                  poster="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&h=600&fit=crop&crop=center&auto=format&q=80"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.nextElementSibling.style.display = 'block';
+                  }}
+                >
+                  <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
+                </video>
+                <img
+                  src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&h=600&fit=crop&crop=center&auto=format&q=80"
+                  alt="AI Analysis"
+                  className="w-full h-full object-cover hidden"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </div>
+            
+            {/* Content Below Video */}
+            <div className="p-6 pl-0">
+              <h3 className="text-3xl font-bold text-gray-900 mb-3">{features[0].title}</h3>
+              <p className="text-gray-600 leading-relaxed mb-4 text-lg">
+                {features[0].description}
+              </p>
+              <div className="flex items-center text-blue-600 font-semibold text-lg group-hover:text-blue-700 transition-colors">
+                Try AI Analysis
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side Features - Scrollable */}
+          <div className="lg:col-span-5">
+            <div className="h-[500px] overflow-y-auto space-y-6 pr-2 scrollable-features">
+              {/* Scrollable feature cards */}
+              {features.slice(1).map((feature, index) => (
+                <div key={index} className="group relative rounded-2xl overflow-hidden bg-white transition-all duration-500 cursor-pointer">
+                  {/* Image */}
+                  <div className="relative h-48 overflow-hidden">
+                    <img 
+                      src={feature.image} 
+                      alt={feature.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                      decoding="async"
+                      width="400"
+                      height="300"
+                    />
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {features.map((feature, index) => {
-            const Icon = feature.icon;
-            return (
-            <Card key={index} className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-8 text-center">
-                <div className={`w-16 h-16 bg-gradient-to-r ${feature.gradient} rounded-2xl flex items-center justify-center mx-auto mb-6`}>
-                  <Icon className="w-8 h-8 text-white" />
+                  {/* Content Below Image */}
+                  <div className="p-4 pl-0">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
+                    <p className="text-gray-600 leading-relaxed mb-3 text-sm">
+                      {feature.description}
+                    </p>
+                    <div className="flex items-center text-blue-600 font-medium text-sm group-hover:text-blue-700 transition-colors">
+                      {feature.title === 'Expert Matching' ? 'Connect Now' :
+                       feature.title === 'Health Insights' ? 'Get Insights' :
+                       feature.title === 'Product Recommendations' ? 'View Products' :
+                       feature.title === 'Health Monitoring' ? 'Start Tracking' :
+                       feature.title === 'Expert Consultations' ? 'Book Now' : 'Learn More'}
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-gray-900">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
-              </CardContent>
-            </Card>
-            );
-          })}
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div className="text-center">
-          <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg rounded-2xl shadow-lg hover:shadow-purple-500/25 transition-all duration-300">
-            Explore All Features
-            <ArrowRight className="w-5 h-5 ml-2" />
+
+        {/* Modern CTA Section */}
+        <div className="relative overflow-hidden rounded-3xl bg-gray-100 p-16 text-center">
+          <div className="relative">
+            <h3 className="text-4xl lg:text-5xl font-md text-black mb-6 leading-tight">
+              Ready to Transform Your
+              <br />
+              <span className=" text-black">
+                Health Journey?
+              </span>
+            </h3>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+              <Button variant="outline" className="black/30 text-black hover:bg-black/10 px-12 py-4 text-lg rounded-2xl font-semibold backdrop-blur-sm">
+               Download
           </Button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
+    </>
   );
 };
 

@@ -12,39 +12,33 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-8">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                <Brain className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">HealPrint</span>
+                <img 
+                src="https://res.cloudinary.com/ecosheane/image/upload/v1756552072/Logo_jvn2t4.png" 
+                alt="HealPrint Logo" 
+                className="h-8 w-auto grayscale"
+              />
+              <span className="text-2xl font-bold bg-black to-purple-600 bg-clip-text text-transparent">HealPrint</span>
             </div>
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link to="#" className="text-gray-600 hover:text-blue-600 transition-colors font-medium">
-                Home
-              </Link>
-              <Link to="#" className="text-gray-600 hover:text-blue-600 transition-colors font-medium">
-                Services
-              </Link>
-              <Link to="#" className="text-gray-600 hover:text-blue-600 transition-colors font-medium">
-                About
-              </Link>
-              <Link to="#" className="text-gray-600 hover:text-blue-600 transition-colors font-medium">
-                Contact
-              </Link>
-            </nav>
+           
          
             <Button
               variant="ghost"
               className="md:hidden p-2"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}  
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </Button>
           </div>
-           <div className="hidden md:flex items-end space-x-4">
-            <Link to="/dashboard">
-              <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-6 py-2 rounded-xl transition-all duration-300">
-                Get Started
-              </Button>
+           <div className="hidden md:flex items-center space-x-4">
+              <Link to="/login">
+                <Button variant="ghost" className="text-gray-600 hover:text-gray-900">
+                  Sign In
+                </Button>
+              </Link>
+              <Link to="/signup">
+                <Button className="bg-gray-900 hover:bg-gray-800 text-white rounded-full px-6">
+                  Get Started
+                </Button>
               </Link>
             </div>
         </div>
