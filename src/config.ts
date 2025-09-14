@@ -1,8 +1,8 @@
 // HealPrint Client Configuration
 export const config = {
-  API_BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8002',
-  // Fallback to localhost:8002 if environment variable is not set
-  DEFAULT_API_URL: 'http://localhost:8002'
+  API_BASE_URL: import.meta.env.VITE_API_BASE_URL || 'https://healprint-server-1.onrender.com',
+  // Fallback to deployed service if environment variable is not set
+  DEFAULT_API_URL: 'https://healprint-server-1.onrender.com'
 };
 
 // Get the actual API URL
