@@ -250,16 +250,16 @@ const HomePage = () => {
 
       {/* Floating Input - Perplexity Style */}
       {hasMessages && (
-        <div className="fixed bottom-6 left-24 right-6 z-20">
+        <div className="fixed bottom-6 left-4 lg:left-24 right-4 z-20">
           <div className="max-w-2xl mx-auto">
             <div className="relative rounded-lg border border-gray-200 shadow-lg hover:shadow-xl focus-within:shadow-xl focus-within:border-blue-400 transition-all duration-200 bg-white">
-              <div className="flex items-center pl-6 pr-2 py-6">
-                <Search className="w-5 h-5 text-gray-400 mr-4 flex-shrink-0" />
+              <div className="flex items-center pl-4 lg:pl-6 pr-2 py-4 lg:py-6">
+                <Search className="w-4 lg:w-5 h-4 lg:h-5 text-gray-400 mr-3 lg:mr-4 flex-shrink-0" />
                 <input
                   ref={inputRef}
                   type="text"
                   placeholder="Ask me question..."
-                  className="flex-1 text-base bg-transparent border-none outline-none placeholder-gray-500 text-gray-900 font-medium"
+                  className="flex-1 text-sm lg:text-base bg-transparent border-none outline-none placeholder-gray-500 text-gray-900 font-medium"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={handleKeyPress}
@@ -267,33 +267,33 @@ const HomePage = () => {
                   disabled={isLoading}
                   autoFocus
                 />
-                <div className="flex items-center space-x-2 ml-4">
+                <div className="flex items-center space-x-1 lg:space-x-2 ml-2 lg:ml-4">
                   <Button 
                     variant="ghost" 
                     size="sm" 
-                    className="w-9 h-9 p-0 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full"
+                    className="w-8 h-8 lg:w-9 lg:h-9 p-0 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full"
                     disabled={isLoading}
                   >
-                    <Camera className="w-4 h-4" />
+                    <Camera className="w-3 h-3 lg:w-4 lg:h-4" />
                   </Button>
                   <Button 
                     variant="ghost" 
                     size="sm" 
-                    className="w-9 h-9 p-0 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full"
+                    className="w-8 h-8 lg:w-9 lg:h-9 p-0 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full"
                     disabled={isLoading}
                   >
-                    <Mic className="w-4 h-4" />
+                    <Mic className="w-3 h-3 lg:w-4 lg:h-4" />
                   </Button>
                   <Button 
                     size="sm" 
-                    className="w-9 h-9 p-0 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-sm disabled:opacity-50"
+                    className="w-8 h-8 lg:w-9 lg:h-9 p-0 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-sm disabled:opacity-50"
                     onClick={() => handleSearch()}
                     disabled={isLoading || !searchQuery.trim()}
                   >
                     {isLoading ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <Loader2 className="w-3 h-3 lg:w-4 lg:h-4 animate-spin" />
                     ) : (
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-3 h-3 lg:w-4 lg:h-4" />
                     )}
                   </Button>
                 </div>

@@ -52,41 +52,41 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-screen max-h-[800px] bg-gray-50 rounded-2xl border border-gray-200">
+    <div className="flex flex-col h-screen max-h-[800px] bg-gray-50 rounded-none sm:rounded-2xl border-0 sm:border border-gray-200 w-full">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white rounded-t-2xl">
-        <div className="flex items-center space-x-3">
+      <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-200 bg-white rounded-none sm:rounded-t-2xl">
+        <div className="flex items-center space-x-2 sm:space-x-3">
           <Button
             variant="ghost"
             size="sm"
             onClick={onBack}
-            className="hover:bg-gray-100"
+            className="hover:bg-gray-100 p-2"
           >
             <ArrowLeft className="w-4 h-4" />
           </Button>
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-teal-600 rounded-lg flex items-center justify-center">
-              <Brain className="w-5 h-5 text-white" />
+            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-teal-500 to-teal-600 rounded-lg flex items-center justify-center">
+              <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
             <div>
-              <h2 className="font-semibold text-gray-900">HealPrint AI</h2>
-              <p className="text-xs text-gray-500">Your Health Assistant</p>
+              <h2 className="font-semibold text-gray-900 text-sm sm:text-base">HealPrint AI</h2>
+              <p className="text-xs text-gray-500 hidden sm:block">Your Health Assistant</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4">
         {messages.length === 0 && (
-          <div className="text-center py-12">
-            <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Brain className="w-8 h-8 text-white" />
+          <div className="text-center py-8 sm:py-12 px-4">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+              <Brain className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">
               Welcome to HealPrint AI
             </h3>
-            <p className="text-gray-600 max-w-md mx-auto">
+            <p className="text-sm sm:text-base text-gray-600 max-w-md mx-auto">
               I'm here to help you connect your skin and hair symptoms to internal health insights. 
               Get personalized wellness guidance, safe product recommendations, and expert referrals. How can I assist you today?
             </p>
@@ -101,7 +101,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             }`}
           >
             <div
-              className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+              className={`max-w-[85%] sm:max-w-[80%] rounded-2xl px-3 sm:px-4 py-2 sm:py-3 ${
                 message.role === 'user'
                   ? 'bg-teal-600 text-white'
                   : 'bg-white border border-gray-200 text-gray-900'
@@ -109,13 +109,13 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             >
               <div className="flex items-start space-x-2">
                 {message.role === 'assistant' && (
-                  <Brain className="w-5 h-5 text-teal-600 mt-0.5 flex-shrink-0" />
+                  <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-teal-600 mt-0.5 flex-shrink-0" />
                 )}
                 {message.role === 'user' && (
-                  <User className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
+                  <User className="w-4 h-4 sm:w-5 sm:h-5 text-white mt-0.5 flex-shrink-0" />
                 )}
                 <div className="flex-1">
-                  <p className="whitespace-pre-wrap leading-relaxed">
+                  <p className="whitespace-pre-wrap leading-relaxed text-sm sm:text-base">
                     {message.content}
                   </p>
                 </div>
@@ -126,12 +126,12 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
         {isLoading && (
           <div className="flex justify-start">
-            <div className="bg-white border border-gray-200 rounded-2xl px-4 py-3">
+            <div className="bg-white border border-gray-200 rounded-2xl px-3 sm:px-4 py-2 sm:py-3">
               <div className="flex items-center space-x-2">
-                <Brain className="w-5 h-5 text-teal-600" />
+                <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-teal-600" />
                 <div className="flex items-center space-x-1">
-                  <Loader2 className="w-4 h-4 animate-spin text-teal-600" />
-                  <span className="text-gray-600">Thinking...</span>
+                  <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 animate-spin text-teal-600" />
+                  <span className="text-gray-600 text-sm sm:text-base">Thinking...</span>
                 </div>
               </div>
             </div>
@@ -140,9 +140,9 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
         {error && (
           <div className="flex justify-center">
-            <div className="bg-red-50 border border-red-200 rounded-2xl px-4 py-3 flex items-center space-x-2 text-red-700">
-              <AlertCircle className="w-5 h-5 flex-shrink-0" />
-              <span>{error}</span>
+            <div className="bg-red-50 border border-red-200 rounded-2xl px-3 sm:px-4 py-2 sm:py-3 flex items-center space-x-2 text-red-700">
+              <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+              <span className="text-sm sm:text-base">{error}</span>
             </div>
           </div>
         )}
@@ -151,25 +151,25 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
       </div>
 
       {/* Input */}
-      <div className="p-4 border-t border-gray-200 bg-white rounded-b-2xl">
+      <div className="p-3 sm:p-4 border-t border-gray-200 bg-white rounded-none sm:rounded-b-2xl">
         <form onSubmit={handleSubmit} className="flex space-x-2">
           <textarea
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Describe your skin or hair concerns..."
-            className="flex-1 min-h-[44px] max-h-32 px-4 py-3 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="flex-1 min-h-[40px] sm:min-h-[44px] max-h-24 sm:max-h-32 px-3 sm:px-4 py-2 sm:py-3 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm sm:text-base"
             disabled={isLoading}
           />
           <Button
             type="submit"
             disabled={!inputMessage.trim() || isLoading}
-            className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-3 rounded-xl h-auto"
+            className="bg-teal-600 hover:bg-teal-700 text-white px-3 sm:px-4 py-2 sm:py-3 rounded-xl h-auto min-w-[44px] sm:min-w-[48px]"
           >
             {isLoading ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
+              <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
             ) : (
-              <Send className="w-5 h-5" />
+              <Send className="w-4 h-4 sm:w-5 sm:h-5" />
             )}
           </Button>
         </form>

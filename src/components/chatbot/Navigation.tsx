@@ -14,7 +14,7 @@ const Navigation = ({ activeTab, setActiveTab }: NavigationProps) => {
   ];
 
   return (
-    <div className="w-20 bg-slate-50 border-r border-slate-200 flex flex-col shadow-sm">
+    <div className="w-20 lg:w-20 bg-slate-50 border-r border-slate-200 flex flex-col shadow-sm">
       {/* Logo */}
       <div className="p-4 border-b border-slate-200 flex items-center justify-center bg-white/50">
         <div className="text-lg font-bold text-blue-600">
@@ -33,11 +33,11 @@ const Navigation = ({ activeTab, setActiveTab }: NavigationProps) => {
                 className="flex flex-col items-center cursor-pointer group"
                 onClick={() => setActiveTab(item.id)}
               >
-                            <div className={`p-3 rounded-full transition-all duration-200 ${
-                              activeTab === item.id 
-                                ? 'bg-blue-600 text-white' 
-                                : 'text-gray-500 hover:bg-blue-100 hover:text-blue-600'
-                            }`}>
+                <div className={`p-3 rounded-full transition-all duration-200 ${
+                  activeTab === item.id 
+                    ? 'bg-blue-600 text-white' 
+                    : 'text-gray-500 hover:bg-blue-100 hover:text-blue-600'
+                }`}>
                   <Icon className="w-6 h-6" />
                 </div>
                 <span className={`text-xs mt-2 font-medium transition-colors ${
@@ -61,11 +61,11 @@ const Navigation = ({ activeTab, setActiveTab }: NavigationProps) => {
           className="flex flex-col items-center cursor-pointer group"
           onClick={() => setActiveTab("help")}
         >
-                      <div className={`p-3 rounded-full transition-all duration-200 ${
-                        activeTab === "help" 
-                          ? 'bg-blue-600 text-white' 
-                          : 'text-gray-500 hover:bg-blue-100 hover:text-blue-600'
-                      }`}>
+          <div className={`p-3 rounded-full transition-all duration-200 ${
+            activeTab === "help" 
+              ? 'bg-blue-600 text-white' 
+              : 'text-gray-500 hover:bg-blue-100 hover:text-blue-600'
+          }`}>
             <User className="w-6 h-6" />
           </div>
           <span className={`text-xs mt-2 font-medium transition-colors ${

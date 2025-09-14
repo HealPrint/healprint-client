@@ -16,7 +16,7 @@ const SettingsPage = () => {
 
   return (
     <div className="h-full overflow-y-auto scrollbar-thin smooth-scroll">
-      <div className="p-6 space-y-6 max-w-4xl mx-auto">
+      <div className="p-6 pt-20 lg:pt-6 space-y-6 max-w-4xl mx-auto">
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div>

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 const WellnessPage = () => (
   <div className="h-full overflow-y-auto scrollbar-thin smooth-scroll">
-    <div className="max-w-4xl mx-auto p-6 space-y-8">
+    <div className="max-w-4xl mx-auto p-6 pt-20 lg:pt-6 space-y-8">
       {/* Health Insights Section */}
       <div className="space-y-8">
         <div className="text-left">
