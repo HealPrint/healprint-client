@@ -1,7 +1,7 @@
 import { getApiUrl } from '../config';
 
 // Force the correct URL for local development
-const API_BASE_URL = 'http://localhost:8001';
+const API_BASE_URL = 'https://healprint-server-auth.onrender.com';
 
 console.log('🔧 AuthService using API URL:', API_BASE_URL);
 
