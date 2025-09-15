@@ -43,7 +43,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const authResponse = await authService.login(credentials);
       authService.setToken(authResponse.access_token);
       
-      // Extract user ID from token (simple implementation for MVP)
+      // Extract user ID from token (MongoDB ObjectId format)
       const userId = authResponse.access_token.replace('token_', '');
       
       // Fetch user profile
@@ -92,7 +92,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       try {
         const token = authService.getToken();
         if (token) {
-          // Extract user ID from token (simple implementation for MVP)
+          // Extract user ID from token (MongoDB ObjectId format)
           const userId = token.replace('token_', '');
           const userProfile = await authService.getUserProfile(userId, token);
           setUser(userProfile);

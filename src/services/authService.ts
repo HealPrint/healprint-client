@@ -1,4 +1,9 @@
-const API_BASE_URL = 'https://healprint-server.onrender.com';
+import { getApiUrl } from '../config';
+
+// Force the correct URL for local development
+const API_BASE_URL = 'http://localhost:8001';
+
+console.log('🔧 AuthService using API URL:', API_BASE_URL);
 
 export interface User {
   id: string;
@@ -6,6 +11,7 @@ export interface User {
   name: string;
   age?: number;
   country?: string;
+  created_at?: string;
 }
 
 export interface LoginCredentials {
@@ -39,7 +45,9 @@ class AuthService {
 
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
     try {
-      console.log('Attempting login to:', `${this.baseUrl}/login`);
+      console.log('🔧 AuthService baseUrl:', this.baseUrl);
+      console.log('🔧 Attempting login to:', `${this.baseUrl}/login`);
+      console.log('🔧 Full URL being called:', `${this.baseUrl}/login`);
       console.log('Credentials:', { email: credentials.email, password: '***' });
       
       const response = await fetch(`${this.baseUrl}/login`, {
@@ -76,6 +84,8 @@ class AuthService {
 
   async signup(userData: SignupData): Promise<User> {
     try {
+      console.log('🔧 AuthService signup baseUrl:', this.baseUrl);
+      console.log('🔧 Attempting signup to:', `${this.baseUrl}/register`);
       const response = await fetch(`${this.baseUrl}/register`, {
         method: 'POST',
         headers: {
