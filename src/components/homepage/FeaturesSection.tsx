@@ -141,12 +141,12 @@ const FeaturesSection = () => {
 
           {/* Right Side Features - Scrollable */}
           <div className="lg:col-span-5">
-            <div className="h-[500px] overflow-y-auto space-y-6 pr-2 scrollable-features">
+            <div className="h-[500px] overflow-y-auto space-y-4 pr-2 scrollable-features">
               {/* Scrollable feature cards */}
               {features.slice(1).map((feature, index) => (
                 <div key={index} className="group relative rounded-2xl overflow-hidden bg-white transition-all duration-500 cursor-pointer">
                   {/* Image */}
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-40 overflow-hidden">
                     <img 
                       src={feature.image} 
                       alt={feature.title}
@@ -156,11 +156,11 @@ const FeaturesSection = () => {
                       width="400"
                       height="300"
                     />
-        </div>
+                  </div>
 
                   {/* Content Below Image */}
                   <div className="p-4 pl-0">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
+                    <h3 className="text-lg font-bold text-gray-900 mb-2">{feature.title}</h3>
                     <p className="text-gray-600 leading-relaxed mb-3 text-sm">
                       {feature.description}
                     </p>

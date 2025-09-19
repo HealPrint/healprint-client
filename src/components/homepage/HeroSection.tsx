@@ -55,39 +55,22 @@ const HeroSection = () => {
           </div>
           </div>
           
-        {/* Feature Showcase Cards with Video Backgrounds */}
+        {/* Feature Showcase Cards with Image Backgrounds */}
         <div className="grid lg:grid-cols-2 gap-8 mb-20">
           {/* AI Analysis Card */}
           <div className="group relative overflow-hidden rounded-2xl bg-white transition-all duration-500 cursor-pointer">
-            {/* Video Background */}
+            {/* Image Background */}
             <div className="relative h-64 overflow-hidden">
-              <video 
-                autoPlay 
-                loop 
-                muted 
-                playsInline 
-                preload="metadata"
-                poster="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&h=600&fit=crop&crop=center&auto=format&q=80"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                onError={(e) => {
-                  const video = e.currentTarget as HTMLVideoElement;
-                  video.style.display = 'none';
-                  const next = video.nextElementSibling as HTMLElement | null;
-                  if (next) next.style.display = 'block';
-                }}
-              >
-                <source src="https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0fd273d2c6d9a064f3ae35579b2bbdf&profile_id=165&oauth2_token_id=57447761" type="video/mp4" />              </video>
-              {/* Fallback image if video doesn't load */}
-                <img 
-                    src="https://res.cloudinary.com/ecosheane/image/upload/v1757844632/christin-hume-0MoF-Fe0w0A-unsplash_ukakzp.jpg" 
+              <img 
+                src="https://res.cloudinary.com/ecosheane/image/upload/v1757844632/christin-hume-0MoF-Fe0w0A-unsplash_ukakzp.jpg" 
                 alt="AI Analysis" 
-                className="w-full h-full object-cover hidden"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
                 decoding="async"
               />
             </div>
             
-            {/* Content Below Video */}
+            {/* Content Below Image */}
             <div className="p-6 pl-0">
               <h3 className="text-2xl font-bold text-gray-900 mb-3 text-left">AI Symptom Analysis</h3>
               <p className="text-gray-600 text-left leading-relaxed mb-4">
@@ -102,37 +85,18 @@ const HeroSection = () => {
 
           {/* Expert Consultation Card */}
           <div className="group relative overflow-hidden rounded-2xl bg-white transition-all duration-500 cursor-pointer">
-            {/* Video Background */}
+            {/* Image Background */}
             <div className="relative h-64 overflow-hidden">
-              <video 
-                autoPlay 
-                loop 
-                muted 
-                playsInline
-                preload="metadata"
-                poster="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&h=600&fit=crop&crop=center&auto=format&q=80"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                onError={(e) => {
-                  const video = e.currentTarget as HTMLVideoElement;
-                  video.style.display = 'none';
-                  const next = video.nextElementSibling as HTMLElement | null;
-                  if (next) next.style.display = 'block';
-                }}
-              >
-                <source src="https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0fd273d2c6d9a064f3ae35579b2bbdf&profile_id=165&oauth2_token_id=57447761" type="video/mp4" />
-                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" type="video/mp4" />
-              </video>
-              {/* Fallback image if video doesn't load */}
               <img 
                 src="https://res.cloudinary.com/ecosheane/image/upload/v1754217273/medical-banner-with-doctor-wearing-goggles_uaauiy.jpg" 
                 alt="Expert Consultation" 
-                className="w-full h-full object-cover hidden"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
                 decoding="async"
               />
             </div>
             
-            {/* Content Below Video */}
+            {/* Content Below Image */}
             <div className="p-6 pl-0">
               <h3 className="text-2xl font-bold text-gray-900 mb-3 text-left">Expert Consultations</h3>
               <p className="text-gray-600 text-left leading-relaxed mb-4">
