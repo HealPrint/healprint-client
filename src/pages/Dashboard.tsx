@@ -36,20 +36,43 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex w-full">
-      {/* Mobile Menu Button */}
-      <div className="fixed top-4 left-4 z-50 lg:hidden">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="bg-white shadow-md hover:bg-gray-50"
-        >
-          {isMobileMenuOpen ? (
-            <X className="w-4 h-4" />
-          ) : (
-            <Menu className="w-4 h-4" />
-          )}
-        </Button>
+      {/* Mobile Top Navbar - ChatGPT style */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200">
+        <div className="flex items-center justify-between px-4 py-3">
+          {/* Left side - ChatGPT menu icon */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="p-2 -ml-2"
+          >
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            )}
+          </button>
+          
+          {/* Center - HealPrint branding */}
+          <div className="flex items-center space-x-2">
+            <img 
+              src="https://res.cloudinary.com/ecosheane/image/upload/v1756552072/Logo_jvn2t4.png" 
+              alt="HealPrint Logo" 
+              className="h-6 w-auto grayscale"
+            />
+            <h1 className="font-semibold text-gray-900 text-base">HealPrint</h1>
+          </div>
+          
+          {/* Right side - ChatGPT new chat icon */}
+          <button
+            onClick={() => handleTabChange("home")}
+            className="p-2 -mr-2"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"/>
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu Overlay */}
@@ -65,12 +88,12 @@ const Dashboard = () => {
         <Navigation activeTab={activeTab} setActiveTab={handleTabChange} />
       </div>
 
-      {/* Mobile Navigation Dropdown */}
-      <div className={`fixed top-16 left-4 right-4 z-50 lg:hidden transform transition-all duration-300 ease-in-out ${
+      {/* Mobile Navigation Dropdown - ChatGPT style */}
+      <div className={`fixed top-16 left-4 right-4 z-40 lg:hidden transform transition-all duration-300 ease-in-out ${
         isMobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0 pointer-events-none'
       }`}>
-        <div className="bg-white rounded-lg shadow-xl border border-gray-200 p-4">
-          <div className="flex justify-around space-x-4">
+        <div className="bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden">
+          <div className="p-2">
             {[
               { id: "home", name: "Chat", icon: Plus },
               { id: "discover", name: "Wellness", icon: Activity },
@@ -82,14 +105,14 @@ const Dashboard = () => {
                 <button
                   key={item.id}
                   onClick={() => handleTabChange(item.id)}
-                  className={`flex flex-col items-center p-3 rounded-lg transition-all duration-200 ${
+                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                     activeTab === item.id
-                      ? 'bg-blue-600 text-white'
-                      : 'text-gray-600 hover:bg-gray-100'
+                      ? 'bg-blue-50 text-blue-600'
+                      : 'text-gray-700 hover:bg-gray-50'
                   }`}
                 >
-                  <Icon className="w-6 h-6 mb-1" />
-                  <span className="text-xs font-medium">{item.name}</span>
+                  <Icon className={`w-5 h-5 ${activeTab === item.id ? 'text-blue-600' : 'text-gray-500'}`} />
+                  <span className="font-medium">{item.name}</span>
                 </button>
               );
             })}
@@ -99,7 +122,7 @@ const Dashboard = () => {
       
       {/* Main Content */}
       <div className="flex-1 flex flex-col lg:ml-20 w-full">
-        <div className="flex-1">
+        <div className="flex-1 pt-16 lg:pt-0">
           {renderContent()}
         </div>
       </div>

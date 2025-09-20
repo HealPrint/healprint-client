@@ -81,8 +81,11 @@ HealPrint is a comprehensive digital health platform that combines AI-powered sy
 
 3. **Environment Configuration**
    ```bash
-   # Create .env file
-   VITE_API_BASE_URL=http://localhost:8000
+   # Optional: Override API URL if needed
+   echo "VITE_API_BASE_URL=https://healprint-server-auth.onrender.com" > .env
+   
+   # Note: The app will use the Render service by default
+   # No .env file needed for basic functionality
    ```
 
 4. **Start development server**
@@ -209,6 +212,17 @@ The application uses a comprehensive design system built with:
 ## 🚀 Deployment
 
 ### Frontend Deployment
+
+#### Render.com Deployment
+1. **Connect your repository** to Render
+2. **Set environment variables** in Render dashboard:
+   ```
+   VITE_API_BASE_URL=https://healprint-server-auth.onrender.com
+   ```
+3. **Build command**: `npm run build`
+4. **Publish directory**: `dist`
+
+#### Local Build
 ```bash
 # Build the application
 npm run build
@@ -218,12 +232,101 @@ npm run build
 ```
 
 ### Backend Deployment
+
+#### Render.com Deployment
+1. **Set environment variables** in Render dashboard:
+   ```
+   MONGODB_URI=mongodb+srv://blockdevrel:blockdevrel@heal.dvydt8o.mongodb.net/?retryWrites=true&w=majority&appName=heal
+   ```
+2. **Build command**: `pip install -r requirements.txt`
+3. **Start command**: `python main.py`
+
+#### Docker Deployment
 ```bash
 # Using Docker Compose
 docker-compose up --build -d
 
 # Or deploy individual services to cloud platforms
 ```
+
+### Environment Variables Reference
+
+#### Frontend (.env)
+```bash
+# Default: Uses Render service automatically
+# No .env file needed for basic functionality
+
+# Optional: Override API URL if needed
+VITE_API_BASE_URL=https://healprint-server-auth.onrender.com
+```
+
+#### Backend Environment Variables
+```bash
+# MongoDB Connection
+MONGODB_URI=mongodb+srv://blockdevrel:blockdevrel@heal.dvydt8o.mongodb.net/?retryWrites=true&w=majority&appName=heal
+
+# API Gateway URL (if using microservices)
+API_GATEWAY_URL=https://healprint-server-auth.onrender.com
+```
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+#### 1. Environment Variables Not Working
+**Problem**: Frontend can't connect to backend API
+**Solution**: 
+- Check that `VITE_API_BASE_URL` is set in Render dashboard
+- Ensure the environment variable starts with `VITE_`
+- Verify the backend URL is correct and accessible
+
+#### 2. Authentication Issues
+**Problem**: Login/signup not working after deployment
+**Solution**:
+- Check browser console for API URL logs
+- Verify backend is running and accessible
+- Check CORS settings in backend
+- Ensure MongoDB connection is working
+
+#### 3. Build Failures
+**Problem**: Build fails on Render
+**Solution**:
+- Check Node.js version (should be 18+)
+- Verify all dependencies are in package.json
+- Check build command: `npm run build`
+- Verify publish directory: `dist`
+
+#### 4. CORS Issues
+**Problem**: CORS errors in browser console
+**Solution**:
+- Add frontend URL to backend CORS origins
+- Check if backend is running on correct port
+- Verify API Gateway is properly configured
+
+### Debug Steps
+
+1. **Check Environment Variables**:
+   ```bash
+   # In browser console
+   console.log('API URL:', import.meta.env.VITE_API_BASE_URL);
+   ```
+
+2. **Test API Connection**:
+   ```bash
+   # Test backend health
+   curl https://healprint-server-auth.onrender.com/health
+   ```
+
+3. **Check Network Tab**:
+   - Open browser DevTools
+   - Go to Network tab
+   - Try to login/signup
+   - Check if API calls are being made to correct URL
+
+4. **Backend Logs**:
+   - Check Render service logs
+   - Look for MongoDB connection errors
+   - Verify all services are running
 
 ## 🤝 Contributing
 
