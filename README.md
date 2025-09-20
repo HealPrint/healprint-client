@@ -1,7 +1,6 @@
 # HealPrint AI - Digital Health Platform
 
 <div align="center">
-  <img src="https://res.cloudinary.com/ecosheane/image/upload/v1756552072/Logo_jvn2t4.png" alt="HealPrint Logo" width="120" height="120" />
   
   <h3>AI-Powered Health Analysis & Expert Consultation Platform</h3>
   
