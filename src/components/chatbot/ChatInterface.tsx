@@ -182,8 +182,12 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             onChange={(e) => setInputMessage(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Describe your skin or hair concerns..."
-            className="flex-1 min-h-[40px] sm:min-h-[44px] max-h-24 sm:max-h-32 px-3 sm:px-4 py-2 sm:py-3 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm sm:text-base"
+            className="flex-1 min-h-[44px] sm:min-h-[44px] max-h-32 sm:max-h-32 px-3 sm:px-4 py-3 sm:py-3 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-base sm:text-base"
             disabled={isLoading}
+            style={{ 
+              fontSize: '16px', // Prevents zoom on iOS
+              lineHeight: '1.4'
+            }}
           />
           <Button
             type="submit"

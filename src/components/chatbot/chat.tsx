@@ -174,10 +174,13 @@ const HomePage = () => {
       {hasMessages && (
         <div 
           ref={scrollContainerRef}
-          className="flex-1 overflow-y-auto scrollbar-thin smooth-scroll h-full"
-          style={{ maxHeight: 'calc(100vh - 140px)' }}
+          className="flex-1 overflow-y-auto scrollbar-thin smooth-scroll"
+          style={{ 
+            maxHeight: 'calc(100vh - 200px)',
+            paddingBottom: 'env(safe-area-inset-bottom, 6rem)'
+          }}
         >
-          <div className="max-w-2xl mx-auto px-3 sm:px-4 py-4 sm:py-8 pb-32 sm:pb-40">
+          <div className="max-w-2xl mx-auto px-3 sm:px-4 py-4 sm:py-8 pb-24 sm:pb-32">
             {/* Messages Container */}
             <div className="space-y-4 sm:space-y-8">
               {messages.map((message, index) => (
@@ -241,7 +244,7 @@ const HomePage = () => {
 
       {/* Floating Input - Mobile Optimized */}
       {hasMessages && (
-        <div className="fixed bottom-3 sm:bottom-6 left-2 sm:left-4 lg:left-24 right-2 sm:right-4 z-20">
+        <div className="fixed bottom-0 left-0 right-0 z-20 bg-white border-t border-gray-200 p-3 sm:p-4 sm:relative sm:border-t-0 sm:bg-transparent sm:px-0">
           <div className="max-w-2xl mx-auto">
             <div className="relative rounded-lg border border-gray-200 shadow-lg hover:shadow-xl focus-within:shadow-xl focus-within:border-blue-400 transition-all duration-200 bg-white">
               <div className="flex items-center pl-3 sm:pl-4 lg:pl-6 pr-1 sm:pr-2 py-3 sm:py-4 lg:py-6">
@@ -250,13 +253,17 @@ const HomePage = () => {
                   ref={inputRef}
                   type="text"
                   placeholder="Ask me question..."
-                  className="flex-1 text-sm sm:text-sm lg:text-base bg-transparent border-none outline-none placeholder-gray-500 text-gray-900 font-medium min-w-0"
+                  className="flex-1 text-base sm:text-base lg:text-base bg-transparent border-none outline-none placeholder-gray-500 text-gray-900 font-medium min-w-0"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={handleKeyPress}
                   onFocus={handleInputFocus}
                   disabled={isLoading}
                   autoFocus
+                  style={{ 
+                    fontSize: '16px', // Prevents zoom on iOS
+                    lineHeight: '1.4'
+                  }}
                 />
                 <div className="flex items-center space-x-1 sm:space-x-1 lg:space-x-2 ml-1 sm:ml-2 lg:ml-4 flex-shrink-0">
                   <Button 
