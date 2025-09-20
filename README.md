@@ -81,11 +81,11 @@ HealPrint is a comprehensive digital health platform that combines AI-powered sy
 
 3. **Environment Configuration**
    ```bash
-   # Optional: Override API URL if needed
-   echo "VITE_API_BASE_URL=https://healprint-server-auth.onrender.com" > .env
+   # Create .env file with your configuration
+   cp .env.example .env
    
-   # Note: The app will use the Render service by default
-   # No .env file needed for basic functionality
+   # Edit .env with your specific values
+   # VITE_API_BASE_URL=your_api_url_here
    ```
 
 4. **Start development server**
@@ -217,7 +217,7 @@ The application uses a comprehensive design system built with:
 1. **Connect your repository** to Render
 2. **Set environment variables** in Render dashboard:
    ```
-   VITE_API_BASE_URL=https://healprint-server-auth.onrender.com
+   VITE_API_BASE_URL=your_api_url_here
    ```
 3. **Build command**: `npm run build`
 4. **Publish directory**: `dist`
@@ -236,7 +236,8 @@ npm run build
 #### Render.com Deployment
 1. **Set environment variables** in Render dashboard:
    ```
-   MONGODB_URI=mongodb+srv://blockdevrel:blockdevrel@heal.dvydt8o.mongodb.net/?retryWrites=true&w=majority&appName=heal
+   MONGODB_URI=your_mongodb_connection_string
+   API_GATEWAY_URL=your_api_gateway_url
    ```
 2. **Build command**: `pip install -r requirements.txt`
 3. **Start command**: `python main.py`
@@ -253,20 +254,25 @@ docker-compose up --build -d
 
 #### Frontend (.env)
 ```bash
-# Default: Uses Render service automatically
-# No .env file needed for basic functionality
+# API Configuration
+VITE_API_BASE_URL=your_api_url_here
 
-# Optional: Override API URL if needed
-VITE_API_BASE_URL=https://healprint-server-auth.onrender.com
+# Optional: Override default settings
+# VITE_APP_NAME=HealPrint
+# VITE_APP_VERSION=1.0.0
 ```
 
 #### Backend Environment Variables
 ```bash
-# MongoDB Connection
-MONGODB_URI=mongodb+srv://blockdevrel:blockdevrel@heal.dvydt8o.mongodb.net/?retryWrites=true&w=majority&appName=heal
+# Database Configuration
+MONGODB_URI=your_mongodb_connection_string
 
-# API Gateway URL (if using microservices)
-API_GATEWAY_URL=https://healprint-server-auth.onrender.com
+# API Configuration
+API_GATEWAY_URL=your_api_gateway_url
+
+# Security (generate your own)
+JWT_SECRET=your_jwt_secret_here
+API_KEY=your_api_key_here
 ```
 
 ## 🔧 Troubleshooting
@@ -314,7 +320,7 @@ API_GATEWAY_URL=https://healprint-server-auth.onrender.com
 2. **Test API Connection**:
    ```bash
    # Test backend health
-   curl https://healprint-server-auth.onrender.com/health
+   curl your_api_url_here/health
    ```
 
 3. **Check Network Tab**:

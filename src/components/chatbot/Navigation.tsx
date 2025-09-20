@@ -16,10 +16,15 @@ const Navigation = ({ activeTab, setActiveTab }: NavigationProps) => {
   return (
     <div className="w-20 lg:w-20 bg-slate-50 border-r border-slate-200 flex flex-col shadow-sm">
       {/* Logo */}
-      <div className="p-4 border-b border-slate-200 flex items-center justify-center bg-white/50">
-        <div className="text-lg font-bold text-blue-600">
-          HP
-        </div>
+      <div 
+        className="p-4 border-b border-slate-200 flex items-center justify-center bg-white/50 cursor-pointer hover:bg-white/70 transition-colors"
+        onClick={() => setActiveTab("home")}
+      >
+        <img 
+          src="https://res.cloudinary.com/ecosheane/image/upload/v1756552072/Logo_jvn2t4.png" 
+          alt="HealPrint Logo" 
+          className="h-8 w-auto grayscale"
+        />
       </div>
 
       {/* Navigation */}
@@ -35,15 +40,15 @@ const Navigation = ({ activeTab, setActiveTab }: NavigationProps) => {
               >
                 <div className={`p-3 rounded-full transition-all duration-200 ${
                   activeTab === item.id 
-                    ? 'bg-blue-600 text-white' 
-                    : 'text-gray-500 hover:bg-blue-100 hover:text-blue-600'
+                    ? 'bg-gray-300 text-gray-700' 
+                    : 'text-gray-600 hover:bg-gray-200 hover:text-gray-700'
                 }`}>
                   <Icon className="w-6 h-6" />
                 </div>
                 <span className={`text-xs mt-2 font-medium transition-colors ${
                   activeTab === item.id 
-                    ? 'text-blue-600' 
-                    : 'text-gray-500 group-hover:text-blue-600'
+                    ? 'text-gray-700' 
+                    : 'text-gray-600 group-hover:text-gray-700'
                 }`}>
                   {item.name}
                 </span>
@@ -63,15 +68,15 @@ const Navigation = ({ activeTab, setActiveTab }: NavigationProps) => {
         >
           <div className={`p-3 rounded-full transition-all duration-200 ${
             activeTab === "help" 
-              ? 'bg-blue-600 text-white' 
-              : 'text-gray-500 hover:bg-blue-100 hover:text-blue-600'
+              ? 'bg-gray-300 text-gray-700' 
+              : 'text-gray-600 hover:bg-gray-200 hover:text-gray-700'
           }`}>
             <User className="w-6 h-6" />
           </div>
           <span className={`text-xs mt-2 font-medium transition-colors ${
             activeTab === "help" 
-              ? 'text-blue-600' 
-              : 'text-gray-500 group-hover:text-blue-600'
+              ? 'text-gray-700' 
+              : 'text-gray-600 group-hover:text-gray-700'
           }`}>
             Profile
           </span>
