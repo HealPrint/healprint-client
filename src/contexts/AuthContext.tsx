@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { authService, User, LoginCredentials, SignupData } from '../services/authService';
+import { googleAuthService } from '../services/googleAuthServiceSimple';
 
 interface AuthContextType {
   user: User | null;
@@ -7,6 +8,8 @@ interface AuthContextType {
   isLoading: boolean;
   login: (credentials: LoginCredentials) => Promise<void>;
   signup: (userData: SignupData) => Promise<void>;
+  googleLogin: () => Promise<void>;
+  handleGoogleAuthSuccess: (userData: any) => void;
   logout: () => void;
   error: string | null;
   clearError: () => void;
@@ -30,6 +33,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const isAuthenticated = !!user;
 
@@ -80,6 +84,42 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const googleLogin = async () => {
+    setIsLoading(true);
+    clearError();
+    
+    try {
+      // Initialize Google Auth if not already done
+      await googleAuthService.initializeGoogleAuth();
+      
+      // Use popup-based authentication
+      const userData = await googleAuthService.authenticateWithGoogle();
+      handleGoogleAuthSuccess(userData);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Google login failed';
+      setError(errorMessage);
+      console.error('Google login error:', err);
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleAuthSuccess = (userData: any) => {
+    // Store the JWT token
+    authService.setToken(userData.access_token);
+    
+    // Set user data
+    setUser({
+      id: userData.id,
+      email: userData.email,
+      name: userData.name,
+      age: userData.age,
+      country: userData.country,
+      created_at: userData.created_at
+    });
+  };
+
   const logout = () => {
     authService.removeToken();
     setUser(null);
@@ -102,6 +142,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         authService.removeToken();
       } finally {
         setIsLoading(false);
+        setIsInitialized(true);
       }
     };
 
@@ -114,10 +155,25 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     isLoading,
     login,
     signup,
+    googleLogin,
+    handleGoogleAuthSuccess,
     logout,
     error,
     clearError,
   };
+
+  // Don't render children until AuthProvider is initialized
+  if (!isInitialized) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">Loading...</h2>
+          <p className="text-gray-600">Initializing authentication...</p>
+        </div>
+      </div>
+    );
+  }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

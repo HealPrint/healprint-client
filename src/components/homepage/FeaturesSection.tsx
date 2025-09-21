@@ -61,7 +61,7 @@ const FeaturesSection = () => {
 
   return (
     <>
-      <style jsx>{`
+      <style>{`
         .scrollable-features::-webkit-scrollbar {
           display: none;
         }
@@ -111,7 +111,7 @@ const FeaturesSection = () => {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
-                    e.currentTarget.nextElementSibling.style.display = 'block';
+                    (e.currentTarget.nextElementSibling as HTMLElement).style.display = 'block';
                   }}
                 >
                   <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />

@@ -3,8 +3,6 @@ import { getApiUrl } from '../config';
 // Get API URL from config
 const API_BASE_URL = getApiUrl();
 
-console.log('🔧 AuthService using API URL:', API_BASE_URL);
-
 export interface User {
   id: string;
   email: string;
@@ -45,11 +43,6 @@ class AuthService {
 
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
     try {
-      console.log('🔧 AuthService baseUrl:', this.baseUrl);
-      console.log('🔧 Attempting login to:', `${this.baseUrl}/login`);
-      console.log('🔧 Full URL being called:', `${this.baseUrl}/login`);
-      console.log('Credentials:', { email: credentials.email, password: '***' });
-      
       const response = await fetch(`${this.baseUrl}/login`, {
         method: 'POST',
         headers: {
@@ -58,12 +51,8 @@ class AuthService {
         body: JSON.stringify(credentials),
       });
 
-      console.log('Response status:', response.status);
-      console.log('Response ok:', response.ok);
-
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('Error response:', errorText);
         
         try {
           const error: ApiError = JSON.parse(errorText);
@@ -74,18 +63,14 @@ class AuthService {
       }
 
       const data = await response.json();
-      console.log('Login successful:', data);
       return data;
     } catch (error) {
-      console.error('Login error:', error);
       throw error;
     }
   }
 
   async signup(userData: SignupData): Promise<User> {
     try {
-      console.log('🔧 AuthService signup baseUrl:', this.baseUrl);
-      console.log('🔧 Attempting signup to:', `${this.baseUrl}/register`);
       const response = await fetch(`${this.baseUrl}/register`, {
         method: 'POST',
         headers: {
@@ -101,7 +86,6 @@ class AuthService {
 
       return await response.json();
     } catch (error) {
-      console.error('Signup error:', error);
       throw error;
     }
   }
@@ -123,7 +107,6 @@ class AuthService {
 
       return await response.json();
     } catch (error) {
-      console.error('Get profile error:', error);
       throw error;
     }
   }

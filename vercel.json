@@ -1,0 +1,15 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "env": {
+    "VITE_GOOGLE_CLIENT_ID": "@google-client-id",
+    "VITE_API_BASE_URL": "@api-base-url"
+  },
+  "build": {
+    "env": {
+      "VITE_GOOGLE_CLIENT_ID": "@google-client-id",
+      "VITE_API_BASE_URL": "@api-base-url"
+    }
+  }
+}

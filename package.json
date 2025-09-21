@@ -9,7 +9,12 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "setup": "node setup-env.js",
+    "setup:env": "node setup-env.js",
+    "deploy:help": "node deploy-vercel.js",
+    "vercel:deploy": "vercel",
+    "vercel:env": "vercel env add"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Eye, EyeOff } from 'lucide-react';
+import { googleAuthService } from '../../services/googleAuthServiceSimple';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -12,7 +13,7 @@ const Login = () => {
   const [step, setStep] = useState(1); // 1 for email, 2 for password
   const [showPassword, setShowPassword] = useState(false);
   
-  const { login, error, clearError, isLoading } = useAuth();
+  const { login, googleLogin, error, clearError, isLoading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -33,7 +34,7 @@ const Login = () => {
         title: "Success",
         description: "Logged in successfully!",
       });
-      navigate('/dashboard');
+      navigate('/chat');
     } catch (err) {
       toast({
         title: "Error",
@@ -47,12 +48,35 @@ const Login = () => {
     setStep(1);
   };
 
-  const handleGoogleAuth = () => {
-    toast({
-      title: "Coming Soon",
-      description: "Google authentication will be available soon!",
-    });
+  const handleGoogleAuth = async () => {
+    try {
+      await googleLogin();
+      toast({
+        title: "Success",
+        description: "Logged in with Google successfully!",
+      });
+      navigate('/chat');
+    } catch (err) {
+      toast({
+        title: "Error",
+        description: err instanceof Error ? err.message : 'Google login failed',
+        variant: "destructive",
+      });
+    }
   };
+
+  // Initialize Google Auth on component mount
+  useEffect(() => {
+    const initGoogleAuth = async () => {
+      try {
+        await googleAuthService.initializeGoogleAuth();
+      } catch (error) {
+        console.error('Failed to initialize Google Auth:', error);
+      }
+    };
+    
+    initGoogleAuth();
+  }, []);
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-4">

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Eye, EyeOff } from 'lucide-react';
+import { googleAuthService } from '../../services/googleAuthServiceSimple';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -14,7 +15,7 @@ const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   
-  const { signup, error, clearError } = useAuth();
+  const { signup, googleLogin, error, clearError } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -51,7 +52,7 @@ const Signup = () => {
         title: "Success",
         description: "Account created successfully!",
       });
-      navigate('/dashboard');
+      navigate('/chat');
     } catch (err) {
       toast({
         title: "Error",
@@ -63,12 +64,35 @@ const Signup = () => {
     }
   };
 
-  const handleGoogleSignup = () => {
-    toast({
-      title: "Coming Soon",
-      description: "Google authentication will be available soon!",
-    });
+  const handleGoogleSignup = async () => {
+    try {
+      await googleLogin();
+      toast({
+        title: "Success",
+        description: "Account created with Google successfully!",
+      });
+      navigate('/chat');
+    } catch (err) {
+      toast({
+        title: "Error",
+        description: err instanceof Error ? err.message : 'Google signup failed',
+        variant: "destructive",
+      });
+    }
   };
+
+  // Initialize Google Auth on component mount
+  useEffect(() => {
+    const initGoogleAuth = async () => {
+      try {
+        await googleAuthService.initializeGoogleAuth();
+      } catch (error) {
+        console.error('Failed to initialize Google Auth:', error);
+      }
+    };
+    
+    initGoogleAuth();
+  }, []);
 
   const handleBackToEmail = () => {
     setStep(1);

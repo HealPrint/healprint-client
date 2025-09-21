@@ -89,7 +89,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             <ArrowLeft className="w-4 h-4" />
           </Button>
           <div className="flex items-center space-x-2">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-teal-500 to-teal-600 rounded-lg flex items-center justify-center">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-[#2F4F5F] rounded-lg flex items-center justify-center">
               <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
             <div>
@@ -104,7 +104,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
       <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 pb-24 sm:pb-4" style={{ paddingBottom: 'env(safe-area-inset-bottom, 6rem)' }}>
         {messages.length === 0 && (
           <div className="text-center py-8 sm:py-12 px-4">
-            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-[#2F4F5F] rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
               <Brain className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
             </div>
             <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">
@@ -127,13 +127,13 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             <div
               className={`max-w-[90%] sm:max-w-[80%] rounded-2xl px-3 sm:px-4 py-2 sm:py-3 ${
                 message.role === 'user'
-                  ? 'bg-teal-600 text-white'
+                  ? 'bg-[#2F4F5F] text-white'
                   : 'bg-white border border-gray-200 text-gray-900'
               }`}
             >
               <div className="flex items-start space-x-2">
                 {message.role === 'assistant' && (
-                  <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-teal-600 mt-0.5 flex-shrink-0" />
+                  <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-[#2F4F5F] mt-0.5 flex-shrink-0" />
                 )}
                 {message.role === 'user' && (
                   <User className="w-4 h-4 sm:w-5 sm:h-5 text-white mt-0.5 flex-shrink-0" />
@@ -152,9 +152,9 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
           <div className="flex justify-start">
             <div className="bg-white border border-gray-200 rounded-2xl px-3 sm:px-4 py-2 sm:py-3">
               <div className="flex items-center space-x-2">
-                <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-teal-600" />
+                <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-[#2F4F5F]" />
                 <div className="flex items-center space-x-1">
-                  <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 animate-spin text-teal-600" />
+                  <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 animate-spin text-[#2F4F5F]" />
                   <span className="text-gray-600 text-sm sm:text-base">Thinking...</span>
                 </div>
               </div>
@@ -182,7 +182,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             onChange={(e) => setInputMessage(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Describe your skin or hair concerns..."
-            className="flex-1 min-h-[44px] sm:min-h-[44px] max-h-32 sm:max-h-32 px-3 sm:px-4 py-3 sm:py-3 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-base sm:text-base"
+            className="flex-1 min-h-[44px] sm:min-h-[44px] max-h-32 sm:max-h-32 px-3 sm:px-4 py-3 sm:py-3 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-[#2F4F5F] focus:border-transparent text-base sm:text-base"
             disabled={isLoading}
             style={{ 
               fontSize: '16px', // Prevents zoom on iOS
@@ -192,7 +192,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
           <Button
             type="submit"
             disabled={!inputMessage.trim() || isLoading}
-            className="bg-teal-600 hover:bg-teal-700 text-white px-3 sm:px-4 py-2 sm:py-3 rounded-xl h-auto min-w-[44px] sm:min-w-[48px]"
+            className="bg-[#2F4F5F] hover:bg-[#2F4F5F]/90 text-white px-3 sm:px-4 py-2 sm:py-3 rounded-xl h-auto min-w-[44px] sm:min-w-[48px]"
           >
             {isLoading ? (
               <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />

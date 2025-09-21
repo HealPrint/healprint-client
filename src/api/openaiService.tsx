@@ -1,7 +1,7 @@
 // HealPrint AI Backend Service Integration
-import { getApiUrl } from '../config';
+import { config } from '../config';
 
-const API_BASE_URL = getApiUrl();
+const API_BASE_URL = config.CHAT_API_URL;
 
 export interface ChatMessage {
   role: 'user' | 'assistant';
@@ -19,14 +19,29 @@ export interface ChatResponse {
   error?: string;
 }
 
+export interface Message {
+  id?: string;
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: string;
+  message_id?: string;
+}
+
 export interface ConversationHistory {
   conversation_id: string;
-  messages: Array<{
-    id: string;
-    user_message: string;
-    ai_response: string;
-    timestamp: string;
-  }>;
+  messages: Message[];
+  title: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ConversationSummary {
+  conversation_id: string;
+  title: string;
+  last_message: string;
+  message_count: number;
+  created_at: string;
+  updated_at: string;
 }
 
 export class HealPrintService {
@@ -96,10 +111,70 @@ export class HealPrintService {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      return await response.json();
+      const data = await response.json();
+      return data;
     } catch (error) {
       console.error('Error fetching conversation history:', error);
       return null;
+    }
+  }
+
+  static async getUserConversations(): Promise<ConversationSummary[]> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/conversations/${this.userId}`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data.conversations || [];
+    } catch (error) {
+      console.error('Error fetching user conversations:', error);
+      return [];
+    }
+  }
+
+  static async createNewConversation(): Promise<string | null> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/conversations/new?user_id=${this.userId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      this.currentConversationId = data.conversation_id;
+      localStorage.setItem('healprint_conversation_id', data.conversation_id);
+      return data.conversation_id;
+    } catch (error) {
+      console.error('Error creating new conversation:', error);
+      return null;
+    }
+  }
+
+  static async deleteConversation(conversationId: string): Promise<boolean> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/conversation/${conversationId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Error deleting conversation:', error);
+      return false;
     }
   }
 

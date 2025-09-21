@@ -11,8 +11,25 @@ import NotFound from "./pages/NotFound";
 import Login from "./components/userAccout/Login";
 import Signup from "./components/userAccout/Signup";
 import ProtectedRoute from "./components/ProtectedRoute";
+import GoogleCallback from "./pages/GoogleCallback";
 
 const queryClient = new QueryClient();
+
+// Component to detect OAuth callback at root - must be inside AuthProvider
+const RootHandler = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const code = urlParams.get('code');
+  const state = urlParams.get('state');
+  
+  // Debug logging
+  // If we have OAuth parameters, show the callback component
+  if (code && state === 'google_auth') {
+    return <GoogleCallback />;
+  }
+  
+  // Otherwise show the landing page
+  return <Index />;
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -22,10 +39,11 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route path="/" element={<RootHandler />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/auth/google/callback" element={<GoogleCallback />} />
+            <Route path="/chat" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

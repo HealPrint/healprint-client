@@ -86,7 +86,10 @@ HealPrint is a comprehensive digital health platform that combines AI-powered sy
    
    # Edit .env with your specific values
    # VITE_API_BASE_URL=your_api_url_here
+   # VITE_GOOGLE_CLIENT_ID=your_google_client_id_here
    ```
+   
+   **Important**: For Google OAuth to work, you need to set up a Google Client ID. See [GOOGLE_SETUP.md](./GOOGLE_SETUP.md) for detailed instructions.
 
 4. **Start development server**
    ```bash

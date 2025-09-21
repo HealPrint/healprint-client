@@ -9,15 +9,37 @@ import {
   ExpertsPage, 
   SettingsPage 
 } from "@/components/chatbot";
+import { ChatHistoryProvider } from "../contexts/ChatHistoryContext";
+import { useChat } from "../hooks/chat";
+import { useChatHistory } from "../contexts/ChatHistoryContext";
 
-const Dashboard = () => {
+const DashboardContent = () => {
   const [activeTab, setActiveTab] = useState("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { startNewChat, loadConversation } = useChat();
+  const { createNewConversation, loadConversations } = useChatHistory();
+
+  const handleNewChat = async () => {
+    // First clear the current chat state
+    startNewChat();
+    // Then create a new conversation in the backend
+    await createNewConversation();
+  };
+
+  const handleConversationSwitch = async (conversationId: string) => {
+    try {
+      await loadConversation(conversationId);
+      // Refresh the conversation list to show updated timestamps
+      await loadConversations();
+    } catch (error) {
+      console.error('Dashboard: Error switching conversation:', error);
+    }
+  };
 
   const renderContent = () => {
     switch (activeTab) {
       case "home":
-        return <HomePage />;
+        return <HomePage onNewChat={handleNewChat} onSelectConversation={handleConversationSwitch} />;
       case "discover":
         return <WellnessPage />;
       case "library":
@@ -25,7 +47,7 @@ const Dashboard = () => {
       case "help":
         return <SettingsPage />;
       default:
-        return <HomePage />;
+        return <HomePage onNewChat={handleNewChat} onSelectConversation={handleConversationSwitch} />;
     }
   };
 
@@ -84,8 +106,13 @@ const Dashboard = () => {
       )}
 
       {/* Desktop Navigation Sidebar */}
-      <div className="hidden lg:block fixed left-0 top-0 h-full z-30">
-        <Navigation activeTab={activeTab} setActiveTab={handleTabChange} />
+      <div className="hidden lg:block">
+             <Navigation 
+               activeTab={activeTab} 
+               setActiveTab={handleTabChange}
+               onNewChat={handleNewChat}
+               onSelectConversation={handleConversationSwitch}
+             />
       </div>
 
       {/* Mobile Navigation Dropdown - ChatGPT style */}
@@ -121,12 +148,20 @@ const Dashboard = () => {
       </div>
       
       {/* Main Content */}
-      <div className="flex-1 flex flex-col lg:ml-20 w-full">
+      <div className="flex-1 flex flex-col w-full lg:ml-20">
         <div className="flex-1 pt-16 lg:pt-0">
           {renderContent()}
         </div>
       </div>
     </div>
+  );
+};
+
+const Dashboard = () => {
+  return (
+    <ChatHistoryProvider>
+      <DashboardContent />
+    </ChatHistoryProvider>
   );
 };
 

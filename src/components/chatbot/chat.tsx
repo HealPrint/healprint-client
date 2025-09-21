@@ -4,11 +4,41 @@ import {
   Search, 
   Mic,
   ArrowRight,
-  Loader2
+  Loader2,
+  Plus
 } from "lucide-react";
 import { useChat } from "../../hooks/chat";
 
-const HomePage = () => {
+// Typewriter effect component
+const TypewriterText = ({ text, speed = 30 }: { text: string; speed?: number }) => {
+  const [displayedText, setDisplayedText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }, speed);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, text, speed]);
+
+  // Reset when text changes
+  useEffect(() => {
+    setDisplayedText("");
+    setCurrentIndex(0);
+  }, [text]);
+
+  return <span>{displayedText}</span>;
+};
+
+interface HomePageProps {
+  onNewChat?: () => void;
+  onSelectConversation?: (id: string) => void;
+}
+
+const HomePage = ({ onNewChat, onSelectConversation }: HomePageProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const { 
     messages, 
@@ -39,6 +69,7 @@ const HomePage = () => {
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
+      e.preventDefault();
       handleSearch();
     }
   };
@@ -52,7 +83,15 @@ const HomePage = () => {
     }
   };
 
-  const hasMessages = messages.length > 0 || isLoading;
+  const hasMessages = messages.length > 0;
+  
+  // Prevent unnecessary re-renders when conversation ID changes but messages are the same
+  const prevConversationId = useRef(currentConversationId);
+  useEffect(() => {
+    if (prevConversationId.current !== currentConversationId) {
+      prevConversationId.current = currentConversationId;
+    }
+  }, [currentConversationId]);
 
   // Auto-scroll to keep current content visible above input
   const scrollToBottom = () => {
@@ -99,6 +138,15 @@ const HomePage = () => {
     }
   }, [hasMessages]);
 
+  // Scroll to bottom when messages change (including when loading a conversation)
+  useEffect(() => {
+    if (messages.length > 0) {
+      setTimeout(() => {
+        scrollToBottom();
+      }, 100);
+    }
+  }, [messages]);
+
   // Keep input focused after search
   useEffect(() => {
     if (!isLoading && inputRef.current) {
@@ -113,14 +161,14 @@ const HomePage = () => {
         <div className="flex-1 flex flex-col items-center justify-center px-4">
           {/* Logo */}
           <div className="mb-8">
-            <div className="text-4xl font-bold text-blue-600">
+            <div className="text-4xl font-bold text-[#2F4F5F]">
               HealPrint
             </div>
           </div>
           
           {/* Centered Search Input - Mobile Optimized */}
           <div className="w-full max-w-xl mx-auto px-2 sm:px-0">
-            <div className="relative rounded-lg border border-gray-200 shadow-md hover:shadow-sm focus-within:shadow-xl focus-within:border-blue-400 transition-all duration-200 bg-white">
+              <div className="relative rounded-lg border border-gray-200 shadow-md hover:shadow-sm focus-within:shadow-xl focus-within:border-[#2F4F5F] transition-all duration-200 bg-white">
               <div className="flex items-center pl-4 sm:pl-6 pr-1 sm:pr-2 py-4 sm:py-6">
                 <Search className="w-4 sm:w-5 h-4 sm:h-5 text-gray-400 mr-3 sm:mr-4 flex-shrink-0" />
                 <input
@@ -139,14 +187,14 @@ const HomePage = () => {
                   <Button 
                     variant="ghost" 
                     size="sm" 
-                    className="w-8 h-8 sm:w-9 sm:h-9 p-0 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full"
+                    className="w-8 h-8 sm:w-9 sm:h-9 p-0 text-gray-400 hover:text-[#2F4F5F] hover:bg-[#2F4F5F]/10 rounded-full"
                     disabled={isLoading}
                   >
                     <Mic className="w-3 h-3 sm:w-4 sm:h-4" />
                   </Button>
                   <Button 
                     size="sm" 
-                    className="w-8 h-8 sm:w-9 sm:h-9 p-0 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-sm disabled:opacity-50"
+                    className="w-8 h-8 sm:w-9 sm:h-9 p-0 bg-[#2F4F5F] hover:bg-[#2F4F5F]/90 text-white rounded-full shadow-sm disabled:opacity-50"
                     onClick={() => handleSearch()}
                     disabled={isLoading || !searchQuery.trim()}
                   >
@@ -170,6 +218,7 @@ const HomePage = () => {
         </div>
       )}
 
+
       {/* Results Section - Mobile Optimized */}
       {hasMessages && (
         <div 
@@ -181,8 +230,9 @@ const HomePage = () => {
           }}
         >
           <div className="max-w-2xl mx-auto px-3 sm:px-4 py-4 sm:py-8 pb-24 sm:pb-32">
+            
             {/* Messages Container */}
-            <div className="space-y-4 sm:space-y-8">
+            <div key={currentConversationId || 'new-chat'} className="space-y-4 sm:space-y-8">
               {messages.map((message, index) => (
                 <div key={index} className="w-full">
                   {message.role === 'user' && (
@@ -190,21 +240,14 @@ const HomePage = () => {
                       <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-2 leading-tight break-words">
                         {message.content}
                       </h1>
-                      <div className="w-12 h-0.5 bg-blue-600"></div>
+                      <div className="w-12 h-0.5 bg-[#2F4F5F]"></div>
                     </div>
                   )}
                   
                   {message.role === 'assistant' && (
                     <div className="w-full">
-                      <div className="flex items-start space-x-2 sm:space-x-3 py-3 sm:py-4">
-                        <div className="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center flex-shrink-0 mt-1">
-                          {/* Empty space - no icon for completed messages */}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="text-sm sm:text-base text-gray-900 leading-relaxed whitespace-pre-wrap break-words overflow-wrap-anywhere">
-                            {message.content}
-                          </div>
-                        </div>
+                      <div className="text-sm sm:text-base text-gray-900 leading-relaxed whitespace-pre-wrap break-words overflow-wrap-anywhere">
+                        <TypewriterText text={message.content} speed={5} />
                       </div>
                     </div>
                   )}
@@ -246,7 +289,7 @@ const HomePage = () => {
       {hasMessages && (
         <div className="fixed bottom-0 left-0 right-0 z-20 bg-white border-t border-gray-200 p-3 sm:p-4 sm:relative sm:border-t-0 sm:bg-transparent sm:px-0">
           <div className="max-w-2xl mx-auto">
-            <div className="relative rounded-lg border border-gray-200 shadow-lg hover:shadow-xl focus-within:shadow-xl focus-within:border-blue-400 transition-all duration-200 bg-white">
+            <div className="relative rounded-lg border border-gray-200 shadow-lg hover:shadow-xl focus-within:shadow-xl focus-within:border-[#2F4F5F] transition-all duration-200 bg-white">
               <div className="flex items-center pl-3 sm:pl-4 lg:pl-6 pr-1 sm:pr-2 py-3 sm:py-4 lg:py-6">
                 <Search className="w-4 sm:w-4 lg:w-5 h-4 sm:h-4 lg:h-5 text-gray-400 mr-2 sm:mr-3 lg:mr-4 flex-shrink-0" />
                 <input
@@ -269,14 +312,14 @@ const HomePage = () => {
                   <Button 
                     variant="ghost" 
                     size="sm" 
-                    className="w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9 p-0 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full"
+                    className="w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9 p-0 text-gray-400 hover:text-[#2F4F5F] hover:bg-[#2F4F5F]/10 rounded-full"
                     disabled={isLoading}
                   >
                     <Mic className="w-3 h-3 sm:w-3 sm:h-3 lg:w-4 lg:h-4" />
                   </Button>
                   <Button 
                     size="sm" 
-                    className="w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9 p-0 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-sm disabled:opacity-50"
+                    className="w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9 p-0 bg-[#2F4F5F] hover:bg-[#2F4F5F]/90 text-white rounded-full shadow-sm disabled:opacity-50"
                     onClick={() => handleSearch()}
                     disabled={isLoading || !searchQuery.trim()}
                   >
