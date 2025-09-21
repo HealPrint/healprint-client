@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Eye, EyeOff } from 'lucide-react';
-import { googleAuthService } from '../../services/googleAuthServiceSimple';
+import { googleAuthService } from '../../services/googleAuthService';
 
 const Login = () => {
   const [email, setEmail] = useState('');

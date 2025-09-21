@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { googleAuthService } from '../services/googleAuthServiceSimple';
+import { googleAuthService } from '../services/googleAuthService';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../hooks/use-toast';
 

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { authService, User, LoginCredentials, SignupData } from '../services/authService';
-import { googleAuthService } from '../services/googleAuthServiceSimple';
+import { googleAuthService } from '../services/googleAuthService';
 
 interface AuthContextType {
   user: User | null;
