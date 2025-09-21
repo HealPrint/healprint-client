@@ -4,12 +4,20 @@
   "framework": "vite",
   "env": {
     "VITE_GOOGLE_CLIENT_ID": "@google-client-id",
-    "VITE_API_BASE_URL": "@api-base-url"
+    "VITE_USER_API_URL": "@user-api-url",
+    "VITE_CHAT_API_URL": "@chat-api-url",
+    "VITE_OPENROUTER_API_KEY": "@openrouter-api-key",
+    "VITE_SITE_URL": "@site-url",
+    "VITE_SITE_NAME": "@site-name"
   },
   "build": {
     "env": {
       "VITE_GOOGLE_CLIENT_ID": "@google-client-id",
-      "VITE_API_BASE_URL": "@api-base-url"
+      "VITE_USER_API_URL": "@user-api-url",
+      "VITE_CHAT_API_URL": "@chat-api-url",
+      "VITE_OPENROUTER_API_KEY": "@openrouter-api-key",
+      "VITE_SITE_URL": "@site-url",
+      "VITE_SITE_NAME": "@site-name"
     }
   }
 }

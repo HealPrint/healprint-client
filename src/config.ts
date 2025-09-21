@@ -20,11 +20,20 @@ const validateEnvironment = () => {
   return true;
 };
 
+// Production fallback URLs
+const getProductionFallback = (service: 'user' | 'chat') => {
+  const baseUrl = 'https://healprint-server.onrender.com';
+  return service === 'user' ? `${baseUrl}/user` : `${baseUrl}/chat`;
+};
+
 export const config: Config = {
   // Get User API URL - from environment variables
   get USER_API_URL() {
     const envUrl = import.meta.env.VITE_USER_API_URL;
     if (!envUrl) {
+      if (this.IS_PRODUCTION) {
+        return getProductionFallback('user');
+      }
       validateEnvironment();
       throw new Error('VITE_USER_API_URL environment variable is required');
     }
@@ -35,6 +44,9 @@ export const config: Config = {
   get CHAT_API_URL() {
     const envUrl = import.meta.env.VITE_CHAT_API_URL;
     if (!envUrl) {
+      if (this.IS_PRODUCTION) {
+        return getProductionFallback('chat');
+      }
       validateEnvironment();
       throw new Error('VITE_CHAT_API_URL environment variable is required');
     }
