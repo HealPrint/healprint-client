@@ -1,7 +1,7 @@
-import { getApiUrl } from '../config';
+import { config } from '../config';
 
-// Get API URL from config
-const API_BASE_URL = getApiUrl();
+// Use the dedicated User/Auth API URL
+const API_BASE_URL = config.USER_API_URL;
 
 export interface User {
   id: string;

@@ -1,4 +1,4 @@
-import { getApiUrl, config } from '../config';
+import { config } from '../config';
 
 // Declare global Google types
 declare global {
@@ -16,7 +16,8 @@ class GoogleAuthService {
   constructor() {
     // Get Google Client ID from environment variables with fallback
     this.clientId = config.GOOGLE_CLIENT_ID;
-    this.apiBaseUrl = getApiUrl();
+    // Use the dedicated User/Auth API URL
+    this.apiBaseUrl = config.USER_API_URL;
     
     if (!this.clientId || this.clientId === 'your-google-client-id-here') {
       console.warn('⚠️ Google Client ID not properly configured. Please set VITE_GOOGLE_CLIENT_ID in your .env file');

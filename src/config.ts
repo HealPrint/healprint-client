@@ -10,7 +10,7 @@ interface Config {
 
 // Environment validation - only validate when actually accessing the values
 const validateEnvironment = () => {
-  const requiredVars = ['VITE_USER_API_URL', 'VITE_CHAT_API_URL', 'VITE_GOOGLE_CLIENT_ID'];
+  const requiredVars = ['VITE_GOOGLE_CLIENT_ID'];
   const missing = requiredVars.filter(varName => !import.meta.env[varName]);
   
   if (missing.length > 0) {
@@ -20,37 +20,21 @@ const validateEnvironment = () => {
   return true;
 };
 
-// Production fallback URLs
-const getProductionFallback = (service: 'user' | 'chat') => {
-  const baseUrl = 'https://healprint-server.onrender.com';
-  return service === 'user' ? `${baseUrl}/user` : `${baseUrl}/chat`;
-};
+// Primary service URLs (can be overridden by env)
+const USER_API_URL = 'https://healprint-server-auth.onrender.com';
+const CHAT_API_URL = 'https://healprint-server-chat.onrender.com';
 
 export const config: Config = {
   // Get User API URL - from environment variables
   get USER_API_URL() {
     const envUrl = import.meta.env.VITE_USER_API_URL;
-    if (!envUrl) {
-      if (this.IS_PRODUCTION) {
-        return getProductionFallback('user');
-      }
-      validateEnvironment();
-      throw new Error('VITE_USER_API_URL environment variable is required');
-    }
-    return envUrl;
+    return envUrl || USER_API_URL;
   },
 
   // Get Chat API URL - from environment variables
   get CHAT_API_URL() {
     const envUrl = import.meta.env.VITE_CHAT_API_URL;
-    if (!envUrl) {
-      if (this.IS_PRODUCTION) {
-        return getProductionFallback('chat');
-      }
-      validateEnvironment();
-      throw new Error('VITE_CHAT_API_URL environment variable is required');
-    }
-    return envUrl;
+    return envUrl || CHAT_API_URL;
   },
 
   // Legacy API_URL for backward compatibility (points to user service)
