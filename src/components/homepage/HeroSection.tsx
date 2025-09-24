@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { useAuth } from "@/contexts/AuthContext";
 import { 
   ArrowRight, 
   MessageCircle,
@@ -21,6 +23,25 @@ import {
 } from "lucide-react";
 
 const HeroSection = () => {
+  const [query, setQuery] = React.useState("");
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+
+  const goToChatOrLogin = () => {
+    if (!query.trim()) return;
+    if (isAuthenticated) {
+      navigate("/chat");
+    } else {
+      navigate("/login");
+    }
+  };
+
+  const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      goToChatOrLogin();
+    }
+  };
   return (
     <>
       {/* Preload critical resources */}
@@ -44,8 +65,11 @@ const HeroSection = () => {
                 type="text"
                 placeholder="Ask about your health concerns or symptoms..."
                 className="w-full px-6 py-4 pr-16 text-lg border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 shadow-sm hover:shadow-md"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
               />
-              <button className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-xl transition-colors duration-200">
+              <button onClick={goToChatOrLogin} className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-xl transition-colors duration-200">
                 <ArrowRight className="w-5 h-5" />
               </button>
             </div>
