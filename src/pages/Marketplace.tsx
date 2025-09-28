@@ -7,6 +7,18 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Header from '../components/homepage/Header';
 import Footer from '../components/homepage/Footer';
 import { 
+  ProductCard, 
+  ProductFilters, 
+  Cart, 
+  Checkout, 
+  OrderConfirmation,
+  MarketplaceProvider,
+  useMarketplace,
+  type Product,
+  type CartItem,
+  type OrderData
+} from '../components/marketplace';
+import { 
   Star, 
   ShoppingCart, 
   Heart, 
@@ -20,13 +32,40 @@ import {
   Truck
 } from "lucide-react";
 
-const Marketplace = () => {
+// Main marketplace content component
+const MarketplaceContent = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('featured');
   const [viewMode, setViewMode] = useState('grid');
+  const [showFilters, setShowFilters] = useState(false);
+  
+  const {
+    state,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    addToWishlist,
+    removeFromWishlist,
+    openCheckout,
+    completeOrder,
+    closeOrderConfirmation,
+    cartItemCount,
+    isInWishlist
+  } = useMarketplace();
 
-  const products = [
+  const [filters, setFilters] = useState({
+    searchTerm: '',
+    category: 'all',
+    priceRange: [0, 1000] as [number, number],
+    rating: 0,
+    brands: [] as string[],
+    availability: [] as string[],
+    features: [] as string[],
+    sortBy: 'featured'
+  });
+
+  const products: Product[] = [
     {
       id: 1,
       name: "Hyaluronic Acid Serum",
@@ -40,7 +79,12 @@ const Marketplace = () => {
       discount: 29,
       isNew: false,
       isBestSeller: true,
-      description: "Deeply hydrating serum with 2% hyaluronic acid for plump, youthful skin"
+      description: "Deeply hydrating serum with 2% hyaluronic acid for plump, youthful skin",
+      ingredients: ["Hyaluronic Acid", "Vitamin C", "Niacinamide"],
+      benefits: ["Deep hydration", "Reduces fine lines", "Improves skin texture"],
+      usage: "Apply morning and evening after cleansing",
+      size: "30ml",
+      inStock: true
     },
     {
       id: 2,
@@ -55,7 +99,12 @@ const Marketplace = () => {
       discount: 26,
       isNew: true,
       isBestSeller: false,
-      description: "Essential vitamins for stronger, thicker hair growth"
+      description: "Essential vitamins for stronger, thicker hair growth",
+      ingredients: ["Biotin", "Folic Acid", "Zinc"],
+      benefits: ["Promotes hair growth", "Strengthens hair", "Reduces hair loss"],
+      usage: "Take 2 capsules daily with food",
+      size: "60 capsules",
+      inStock: true
     },
     {
       id: 3,
@@ -70,7 +119,12 @@ const Marketplace = () => {
       discount: 18,
       isNew: false,
       isBestSeller: false,
-      description: "Essential fatty acids for healthy skin from within"
+      description: "Essential fatty acids for healthy skin from within",
+      ingredients: ["Omega-3", "Vitamin E", "Antioxidants"],
+      benefits: ["Skin hydration", "Reduces inflammation", "Anti-aging"],
+      usage: "Take 2 capsules daily with meals",
+      size: "90 capsules",
+      inStock: true
     },
     {
       id: 4,
@@ -85,7 +139,12 @@ const Marketplace = () => {
       discount: 27,
       isNew: true,
       isBestSeller: false,
-      description: "Gentle foaming cleanser for all skin types"
+      description: "Gentle foaming cleanser for all skin types",
+      ingredients: ["Glycerin", "Chamomile", "Aloe Vera"],
+      benefits: ["Gentle cleansing", "Moisturizing", "Suitable for sensitive skin"],
+      usage: "Use morning and evening, massage gently and rinse",
+      size: "150ml",
+      inStock: true
     },
     {
       id: 5,
@@ -163,15 +222,57 @@ const Marketplace = () => {
     return matchesSearch && matchesCategory;
   });
 
-  const handleAddToCart = (productId: number) => {
-    console.log('Added to cart:', productId);
-    // Add to cart logic here
+  const handleAddToCart = (product: Product) => {
+    addToCart(product);
   };
 
   const handleAddToWishlist = (productId: number) => {
-    console.log('Added to wishlist:', productId);
-    // Add to wishlist logic here
+    if (isInWishlist(productId)) {
+      removeFromWishlist(productId);
+    } else {
+      addToWishlist(productId);
+    }
   };
+
+  const handleViewDetails = (product: Product) => {
+    // In a real app, this would open a product detail modal or navigate to product page
+    console.log('View product details:', product);
+  };
+
+  const handleCheckout = () => {
+    openCheckout();
+  };
+
+  const handleOrderComplete = (orderData: OrderData) => {
+    completeOrder(orderData);
+  };
+
+  // Show different components based on state
+  if (state.isOrderConfirmationOpen && state.currentOrder) {
+    return (
+      <div className="min-h-screen">
+        <Header />
+        <OrderConfirmation 
+          orderData={state.currentOrder}
+          onContinueShopping={() => closeOrderConfirmation()}
+        />
+        <Footer />
+      </div>
+    );
+  }
+
+  if (state.isCheckoutOpen) {
+    return (
+      <div className="min-h-screen">
+        <Header />
+        <Checkout 
+          cartItems={state.cart}
+          onOrderComplete={handleOrderComplete}
+        />
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">
@@ -181,10 +282,22 @@ const Marketplace = () => {
       <div className="bg-white border-b mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-            <div>
-              <h1 className="text-3xl font-md text-gray-900">Health Marketplace</h1>
-              <p className="text-gray-600 mt-1">Discover products recommended by our health experts</p>
-            </div>
+              <div>
+                <h1 className="text-3xl font-md text-gray-900">Health Marketplace</h1>
+                <p className="text-gray-600 mt-1">Discover products recommended by our health experts</p>
+              </div>
+              
+              {/* Cart Button */}
+              <div className="flex items-center gap-4">
+                <Button 
+                  onClick={() => openCheckout()}
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                  disabled={cartItemCount === 0}
+                >
+                  <ShoppingCart className="w-4 h-4 mr-2" />
+                  Cart ({cartItemCount})
+                </Button>
+              </div>
             
             {/* Search and Filters */}
             <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
@@ -253,89 +366,14 @@ const Marketplace = () => {
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {filteredProducts.map((product) => (
-            <Card key={product.id} className="bg-white hover:shadow-lg transition-all duration-300 group cursor-pointer h-full">
-              <CardContent className="p-0 h-full flex flex-col">
-                {/* Product Image */}
-                <div className="relative h-48 overflow-hidden rounded-t-lg">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  
-                  {/* Badges */}
-                  <div className="absolute top-2 left-2">
-                    {product.isNew && (
-                      <Badge className="bg-green-500 text-white text-xs px-2 py-1">
-                        New
-                      </Badge>
-                    )}
-                  </div>
-
-                  {/* Quick Actions */}
-                  <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Button 
-                      size="sm" 
-                      variant="secondary" 
-                      className="w-8 h-8 p-0 rounded-full"
-                      onClick={() => handleAddToWishlist(product.id)}
-                    >
-                      <Heart className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
-
-                {/* Product Info */}
-                <div className="p-3 flex-1 flex flex-col">
-                  <div className="mb-2">
-                    <Badge variant="outline" className="text-xs mb-1 capitalize">
-                      {product.category.replace('-', ' ')}
-                    </Badge>
-                    <h3 className="font-semibold text-gray-900 text-sm mb-1 line-clamp-1">
-                      {product.name}
-                    </h3>
-                    <p className="text-xs text-gray-500 mb-1">{product.brand}</p>
-                  </div>
-
-                  {/* Rating */}
-                  <div className="flex items-center gap-1 mb-2">
-                    <div className="flex items-center">
-                      {[...Array(5)].map((_, i) => (
-                        <Star 
-                          key={i} 
-                          className={`w-3 h-3 ${
-                            i < Math.floor(product.rating) 
-                              ? 'text-yellow-400 fill-current' 
-                              : 'text-gray-300'
-                          }`} 
-                        />
-                      ))}
-                    </div>
-                    <span className="text-xs text-gray-600">
-                      {product.rating} ({product.reviews})
-                    </span>
-                  </div>
-
-                  {/* Price and Button */}
-                  <div className="mt-auto">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-lg font-bold text-gray-900">
-                        ${product.price}
-                      </span>
-                    </div>
-
-                    {/* Add to Cart Button */}
-                    <Button 
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white text-xs py-2 rounded-lg"
-                      onClick={() => handleAddToCart(product.id)}
-                    >
-                      <ShoppingCart className="w-3 h-3 mr-1" />
-                      Add to Cart
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <ProductCard
+              key={product.id}
+              product={product}
+              onAddToCart={handleAddToCart}
+              onAddToWishlist={handleAddToWishlist}
+              onViewDetails={handleViewDetails}
+              viewMode="grid"
+            />
           ))}
         </div>
 
@@ -399,4 +437,13 @@ const Marketplace = () => {
   );
 };
 
-export default Marketplace;
+// Main Marketplace component with provider
+const MarketplaceWithProvider = () => {
+  return (
+    <MarketplaceProvider>
+      <MarketplaceContent />
+    </MarketplaceProvider>
+  );
+};
+
+export default MarketplaceWithProvider;

@@ -1,7 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ExternalLink } from "lucide-react";
 
 const MarketplaceSection = () => {
+  const navigate = useNavigate();
+  
   const products = [
     {
       id: 1,
@@ -122,7 +125,7 @@ const MarketplaceSection = () => {
         {/* Scroll Indicator */}
         <div className="text-center mt-8">
           <button 
-            onClick={() => window.open('/marketplace', '_blank')}
+            onClick={() => navigate('/marketplace')}
             className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 transition-colors duration-200 cursor-pointer group"
           >
             <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse group-hover:bg-blue-700"></div>
