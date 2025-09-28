@@ -1,7 +1,25 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import HealthInsightDetail from "./HealthInsightDetail";
 
-const WellnessPage = () => (
+const WellnessPage = () => {
+  const [selectedInsight, setSelectedInsight] = useState<string | null>(null);
+
+  const handleReadMore = (insightType: string) => {
+    setSelectedInsight(insightType);
+  };
+
+  const handleBack = () => {
+    setSelectedInsight(null);
+  };
+
+  // Show detail view if an insight is selected
+  if (selectedInsight) {
+    return <HealthInsightDetail insightType={selectedInsight} onBack={handleBack} />;
+  }
+
+  return (
   <div className="h-full overflow-y-auto scrollbar-thin smooth-scroll">
     <div className="max-w-4xl mx-auto p-6 pt-20 lg:pt-6 space-y-8">
       {/* Health Insights Section */}
@@ -20,7 +38,10 @@ const WellnessPage = () => (
               <p className="text-gray-600 leading-relaxed mb-4">
                 <span className="font-semibold text-blue-600">72%</span> of people with recurring acne have gut or hormonal imbalances contributing to flare-ups.
               </p>
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+              <Button 
+                onClick={() => handleReadMore('hormonal-balance')}
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
                 Read More
               </Button>
             </CardContent>
@@ -34,7 +55,10 @@ const WellnessPage = () => (
               <p className="text-gray-600 leading-relaxed mb-4">
                 Over <span className="font-semibold text-blue-600">80%</span> of women experience hair thinning, with more than half linked to internal health issues.
               </p>
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+              <Button 
+                onClick={() => handleReadMore('nutrition-hair')}
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
                 Read More
               </Button>
             </CardContent>
@@ -48,7 +72,10 @@ const WellnessPage = () => (
               <p className="text-gray-600 leading-relaxed mb-4">
                 Chronic stress can trigger inflammatory skin conditions and disrupt natural healing processes.
               </p>
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+              <Button 
+                onClick={() => handleReadMore('stress-skin')}
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
                 Read More
               </Button>
             </CardContent>
@@ -62,7 +89,10 @@ const WellnessPage = () => (
               <p className="text-gray-600 leading-relaxed mb-4">
                 The gut-skin axis shows how digestive health directly impacts skin clarity and overall appearance.
               </p>
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+              <Button 
+                onClick={() => handleReadMore('gut-skin')}
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
                 Read More
               </Button>
             </CardContent>
@@ -71,6 +101,7 @@ const WellnessPage = () => (
       </div>
     </div>
   </div>
-);
+  );
+};
 
 export default WellnessPage;

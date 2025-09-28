@@ -12,7 +12,6 @@ import {
   Users,
   Star,
   CheckCircle,
-  Play,
   ExternalLink,
   Upload,
   Eye,
@@ -51,7 +50,7 @@ const HeroSection = () => {
       
       <div className="bg-white">
       {/* Hero Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12">
         <div className="text-center mb-20">
           <h4 className="text-3xl font-md text-gray-900 mb-6 leading-tight">
            Curious about your health?

@@ -9,6 +9,9 @@ declare global {
 
 // Google OAuth Service
 class GoogleAuthService {
+  signInWithGoogle() {
+    throw new Error('Method not implemented.');
+  }
   private clientId: string;
   private apiBaseUrl: string;
   private isInitialized: boolean = false;

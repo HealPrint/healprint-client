@@ -12,7 +12,7 @@ export interface ChatMessage {
 export interface ChatResponse {
   response: string;
   conversation_id: string;
-  message_id: string;
+  message_id: string; 
   assessment_stage: string;
   symptoms_collected: Record<string, any>;
   needs_diagnosis: boolean;

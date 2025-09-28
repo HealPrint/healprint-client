@@ -25,14 +25,7 @@ const FeaturesSection = () => {
       image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=300&fit=crop&crop=center&auto=format&q=80",
       overlay: "Connect with verified health professionals"
     },
-    {
-      icon: Brain,
-      title: "Health Insights",
-      description: "Deep analysis connecting external symptoms to internal health conditions",
-      gradient: "from-purple-500 to-pink-500",
-      image: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=400&h=300&fit=crop&crop=center&auto=format&q=80",
-      overlay: "Get deep insights into your health patterns"
-    },
+   
     {
       icon: Search,
       title: "Product Recommendations",
@@ -70,29 +63,14 @@ const FeaturesSection = () => {
           scrollbar-width: none;
         }
       `}</style>
-      <section className="relative py-16 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 overflow-hidden">
+      <section className="relative pt-16 pb-16 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-100/20 via-transparent to-transparent"></div>
       <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-green-400/10 to-blue-400/10 rounded-full blur-3xl"></div>
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header Section */}
-        {/* <div className="text-left mb-24">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 border border-blue-200/50 mb-8">
-            <div className="w-2 h-2 bg-blue-500 rounded-full mr-3 animate-pulse"></div>
-            <span className="text-blue-700 font-medium text-sm">AI-Powered Health Platform</span>
-          </div>
-          <h2 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-900 to-gray-900 bg-clip-text text-transparent mb-8 leading-tight">
-            Advanced Health
-            <br />
-            <span className="text-blue-600">AI Features</span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-4xl leading-relaxed font-light">
-            Three cutting-edge AI-powered features working in harmony to deliver comprehensive health insights, 
-            personalized recommendations, and expert-level guidance for your wellness journey.
-          </p>
-        </div> */}
+      
 
         {/* Modern Asymmetric Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-24">
@@ -107,7 +85,6 @@ const FeaturesSection = () => {
                   muted 
                   playsInline
                   preload="metadata"
-                  poster="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&h=600&fit=crop&crop=center&auto=format&q=80"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
@@ -116,13 +93,7 @@ const FeaturesSection = () => {
                 >
                   <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
                 </video>
-                <img
-                  src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&h=600&fit=crop&crop=center&auto=format&q=80"
-                  alt="AI Analysis"
-                  className="w-full h-full object-cover hidden"
-                  loading="lazy"
-                  decoding="async"
-                />
+               
               </div>
             </div>
             

@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { LandingPage as Index } from "@/components/homepage";
 import Dashboard from "./pages/Dashboard";
+import Marketplace from "./pages/Marketplace";
 import NotFound from "./pages/NotFound";
 import Login from "./components/userAccout/Login";
 import Signup from "./components/userAccout/Signup";
@@ -44,6 +45,7 @@ const App = () => (
             <Route path="/signup" element={<Signup />} />
             <Route path="/auth/google/callback" element={<GoogleCallback />} />
             <Route path="/chat" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/marketplace" element={<Marketplace />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -6,14 +6,16 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Eye, EyeOff } from 'lucide-react';
 import { googleAuthService } from '../../services/googleAuthService';
+import HealthProfileOnboarding from './HealthProfileOnboarding';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [step, setStep] = useState(1); // 1 for email, 2 for password, 3 for name
+  const [step, setStep] = useState(1); // 1 for email, 2 for password, 3 for name, 4 for health profile
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showHealthProfile, setShowHealthProfile] = useState(false);
   
   const { signup, googleLogin, error, clearError } = useAuth();
   const navigate = useNavigate();
@@ -52,7 +54,7 @@ const Signup = () => {
         title: "Success",
         description: "Account created successfully!",
       });
-      navigate('/chat');
+      setShowHealthProfile(true);
     } catch (err) {
       toast({
         title: "Error",
@@ -71,7 +73,7 @@ const Signup = () => {
         title: "Success",
         description: "Account created with Google successfully!",
       });
-      navigate('/chat');
+      setShowHealthProfile(true);
     } catch (err) {
       toast({
         title: "Error",
@@ -79,6 +81,16 @@ const Signup = () => {
         variant: "destructive",
       });
     }
+  };
+
+  const handleHealthProfileComplete = (profile: any) => {
+    // Save health profile to user context or API
+    console.log('Health profile saved:', profile);
+    navigate('/chat');
+  };
+
+  const handleHealthProfileSkip = () => {
+    navigate('/chat');
   };
 
   // Initialize Google Auth on component mount
@@ -101,6 +113,16 @@ const Signup = () => {
   const handleBackToPassword = () => {
     setStep(2);
   };
+
+  // Show health profile onboarding after successful signup
+  if (showHealthProfile) {
+    return (
+      <HealthProfileOnboarding
+        onComplete={handleHealthProfileComplete}
+        onSkip={handleHealthProfileSkip}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-4">
