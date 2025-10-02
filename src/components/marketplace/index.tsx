@@ -8,3 +8,4 @@ export { default as MarketplaceProvider, useMarketplace } from './MarketplacePro
 
 // Export types
 export type { CartItem, Product, OrderData } from './MarketplaceProvider';
+

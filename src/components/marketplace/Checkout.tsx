@@ -511,3 +511,4 @@ const Checkout: React.FC<CheckoutProps> = ({ cartItems, onOrderComplete }) => {
 };
 
 export default Checkout;
+

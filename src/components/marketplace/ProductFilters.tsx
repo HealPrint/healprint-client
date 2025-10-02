@@ -336,3 +336,4 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
 };
 
 export default ProductFilters;
+

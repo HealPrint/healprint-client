@@ -246,3 +246,4 @@ const Cart: React.FC<CartProps> = ({ cartItems, updateQuantity, removeItem, onCh
 };
 
 export default Cart;
+

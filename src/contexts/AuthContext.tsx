@@ -93,7 +93,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       await googleAuthService.initializeGoogleAuth();
       
       // Use popup-based authentication
-      const userData = await googleAuthService.authenticateWithGoogle();
+      const userData = await googleAuthService.promptOneTap();
       handleGoogleAuthSuccess(userData);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Google login failed';
@@ -126,7 +126,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     clearError();
   };
 
-  // Check for existing token on app load
+  // Check for existing token on app load (runs in background)
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
@@ -134,10 +134,25 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         if (token) {
           // Extract user ID from token (MongoDB ObjectId format)
           const userId = token.replace('token_', '');
-          const userProfile = await authService.getUserProfile(userId, token);
-          setUser(userProfile);
+          
+          // Add timeout to prevent hanging
+          const timeoutPromise = new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Auth check timeout')), 5000)
+          );
+          
+          const profilePromise = authService.getUserProfile(userId, token);
+          
+          try {
+            const userProfile = await Promise.race([profilePromise, timeoutPromise]) as User;
+            setUser(userProfile);
+          } catch (timeoutError) {
+            console.warn('Auth check timed out, proceeding without authentication');
+            // Don't remove token on timeout, just proceed without setting user
+            // This allows the user to retry later if the API comes back online
+          }
         }
       } catch (err) {
+        console.warn('Auth check failed:', err);
         // Token is invalid, remove it
         authService.removeToken();
       } finally {
@@ -146,6 +161,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     };
 
+    // Run auth check in background immediately
     checkAuthStatus();
   }, []);
 
@@ -162,18 +178,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     clearError,
   };
 
-  // Don't render children until AuthProvider is initialized
-  if (!isInitialized) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">Loading...</h2>
-          <p className="text-gray-600">Initializing authentication...</p>
-        </div>
-      </div>
-    );
-  }
-
+  // Always render children immediately - no loading screen
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
