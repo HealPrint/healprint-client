@@ -44,9 +44,9 @@ const HeroSection = () => {
   return (
     <>
       {/* Preload critical resources */}
-      <link rel="preload" as="image" href="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&h=600&fit=crop&crop=center&auto=format&q=80" />
-      <link rel="preload" as="image" href="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&h=600&fit=crop&crop=center&auto=format&q=80" />
-      <link rel="preload" as="video" href="https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0fd273d2c6d9a064f3ae35579b2bbdf&profile_id=165&oauth2_token_id=57447761" />
+      <link rel="preload" as="image" href="/assets/christin-hume-0MoF-Fe0w0A-unsplash_ukakzp.jpg" />
+      <link rel="preload" as="image" href="/assets/medical-banner-with-doctor-wearing-goggles_uaauiy.jpg" />
+      <link rel="preload" as="image" href="/assets/woman-with-tablet-device-illustrating-min_zvux1l.jpg" />
       
       <div className="bg-white">
       {/* Hero Section */}
@@ -85,7 +85,7 @@ const HeroSection = () => {
             {/* Image Background */}
             <div className="relative h-64 overflow-hidden">
               <img 
-                src="https://res.cloudinary.com/ecosheane/image/upload/v1757844632/christin-hume-0MoF-Fe0w0A-unsplash_ukakzp.jpg" 
+                src="/assets/christin-hume-0MoF-Fe0w0A-unsplash_ukakzp.jpg" 
                 alt="AI Analysis" 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
@@ -111,7 +111,7 @@ const HeroSection = () => {
             {/* Image Background */}
             <div className="relative h-64 overflow-hidden">
               <img 
-                src="https://res.cloudinary.com/ecosheane/image/upload/v1754217273/medical-banner-with-doctor-wearing-goggles_uaauiy.jpg" 
+                src="/assets/medical-banner-with-doctor-wearing-goggles_uaauiy.jpg" 
                 alt="Expert Consultation" 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
@@ -148,7 +148,7 @@ const HeroSection = () => {
               {/* Real Image */}
               <div className="relative h-64 overflow-hidden">
                 <img 
-                  src="https://res.cloudinary.com/ecosheane/image/upload/v1754218524/woman-with-tablet-device-illustrating-min_zvux1l.jpg" 
+                  src="/assets/woman-with-tablet-device-illustrating-min_zvux1l.jpg" 
                   alt="Upload & Analyze" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
@@ -172,7 +172,7 @@ const HeroSection = () => {
               {/* Real Image */}
               <div className="relative h-64 overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&h=400&fit=crop&crop=center&auto=format&q=80" 
+                  src="/assets/portrait-african-american-practitioner-doctor-working-hospital-office_eig706.jpg" 
                   alt="Expert Review" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
@@ -196,7 +196,7 @@ const HeroSection = () => {
               {/* Real Image */}
               <div className="relative h-64 overflow-hidden">
                 <img 
-                  src="https://res.cloudinary.com/ecosheane/image/upload/v1754218502/retinal-biometrics-technology-with-man-s-eye-digital-remix-min_dhuks8.jpg" 
+                  src="/assets/retinal-biometrics-technology-with-man-s-eye-digital-remix-min_dhuks8.jpg" 
                   alt="Track & Monitor" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"

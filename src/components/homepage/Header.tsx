@@ -13,9 +13,9 @@ const Header = () => {
           {/* Logo and Brand */}
           <div className="flex items-center space-x-2 sm:space-x-3">
             <img 
-              src="https://res.cloudinary.com/ecosheane/image/upload/v1756552072/Logo_jvn2t4.png" 
+              src="/assets/Remifi_logo_wbl8fg.png" 
               alt="HealPrint Logo" 
-              className="h-6 sm:h-8 w-auto grayscale"
+              className="h-6 sm:h-8 w-auto"
             />
             <span className="text-lg sm:text-2xl font-bold bg-black to-purple-600 bg-clip-text text-transparent">HealPrint</span>
           </div>

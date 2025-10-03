@@ -14,7 +14,7 @@ const FeaturesSection = () => {
       title: "Symptom Analysis",
       description: "AI-powered analysis of skin and hair symptoms to identify potential health connections",
       gradient: "from-blue-500 to-purple-500",
-      image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop&crop=center&auto=format&q=80",
+      image: "/assets/christin-hume-0MoF-Fe0w0A-unsplash_ukakzp.jpg",
       overlay: "Upload photos and get instant AI analysis"
     },
     {
@@ -22,7 +22,7 @@ const FeaturesSection = () => {
       title: "Expert Matching",
       description: "Connect with certified dermatologists, nutritionists, and health coaches",
       gradient: "from-emerald-500 to-blue-500",
-      image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=300&fit=crop&crop=center&auto=format&q=80",
+      image: "/assets/portrait-african-american-practitioner-doctor-working-hospital-office_eig706.jpg",
       overlay: "Connect with verified health professionals"
     },
    
@@ -31,7 +31,7 @@ const FeaturesSection = () => {
       title: "Product Recommendations",
       description: "Safe, personalized product suggestions based on your health profile",
       gradient: "from-orange-500 to-red-500",
-      image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop&crop=center&auto=format&q=80",
+      image: "/assets/woman-with-tablet-device-illustrating-min_zvux1l.jpg",
       overlay: "Get personalized product suggestions"
     },
     {
@@ -39,7 +39,7 @@ const FeaturesSection = () => {
       title: "Health Monitoring",
       description: "Track your wellness journey with personalized health reminders and tips",
       gradient: "from-cyan-500 to-blue-500",
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&crop=center&auto=format&q=80",
+      image: "/assets/retinal-biometrics-technology-with-man-s-eye-digital-remix-min_dhuks8.jpg",
       overlay: "Track your health progress"
     },
     {
@@ -47,7 +47,7 @@ const FeaturesSection = () => {
       title: "Expert Consultations",
       description: "Book direct consultations with certified health professionals",
       gradient: "from-indigo-500 to-purple-500",
-      image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=400&h=300&fit=crop&crop=center&auto=format&q=80",
+      image: "/assets/medical-banner-with-doctor-wearing-goggles_uaauiy.jpg",
       overlay: "Book professional consultations"
     }
   ];

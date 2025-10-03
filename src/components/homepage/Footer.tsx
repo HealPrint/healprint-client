@@ -15,9 +15,9 @@ const Footer = () => {
           <div className="lg:col-span-5">
             <div className="flex items-center space-x-3 mb-8">
               <img 
-                src="https://res.cloudinary.com/ecosheane/image/upload/v1756552072/Logo_jvn2t4.png" 
+                src="/assets/Remifi_logo_wbl8fg.png" 
                 alt="HealPrint Logo" 
-                className="h-12 w-auto grayscale"
+                className="h-12 w-auto"
               />
               <span className="text-3xl font-bold text-black">HealPrint</span>
             </div>
