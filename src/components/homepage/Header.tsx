@@ -11,14 +11,14 @@ const Header = () => {
       <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex items-center justify-between">
           {/* Logo and Brand */}
-          <div className="flex items-center space-x-2 sm:space-x-3">
+          <Link to="/" className="flex items-center space-x-2 sm:space-x-3 hover:opacity-80 transition-opacity">
             <img 
               src="/assets/Remifi_logo_wbl8fg.png" 
               alt="HealPrint Logo" 
               className="h-6 sm:h-8 w-auto"
             />
             <span className="text-lg sm:text-2xl font-bold bg-black to-purple-600 bg-clip-text text-transparent">HealPrint</span>
-          </div>
+          </Link>
          
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
