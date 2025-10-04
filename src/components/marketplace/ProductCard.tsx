@@ -149,108 +149,110 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   // Grid view (default)
   return (
-    <Card className="bg-white hover:shadow-lg transition-all duration-300 group cursor-pointer h-full">
-      <CardContent className="p-0 h-full flex flex-col">
-        {/* Product Image */}
-        <div className="relative h-48 overflow-hidden rounded-t-lg">
-          <img 
-            src={product.image} 
-            alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-          />
-          {/* Badges */}
-          <div className="absolute top-2 left-2">
-            {/* Badges removed */}
-          </div>
-          {discountPercentage > 0 && (
-            <div className="absolute top-2 right-2">
-              <Badge className="bg-red-500 text-white text-xs px-2 py-1">
-                -{discountPercentage}%
-              </Badge>
+    <div className="group cursor-pointer">
+      {/* Product Image with Card */}
+      <Card className="bg-white hover:shadow-lg transition-all duration-300 mb-4">
+        <CardContent className="p-0">
+          <div className="relative h-48 overflow-hidden rounded-lg">
+            <img 
+              src={product.image} 
+              alt={product.name}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            {/* Badges */}
+            <div className="absolute top-2 left-2">
+              {/* Badges removed */}
             </div>
-          )}
-          
-          {/* Quick Actions */}
-          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <div className="flex flex-col gap-2">
-              <Button 
-                size="sm" 
-                variant="secondary" 
-                className="w-8 h-8 p-0 rounded-full"
-                onClick={() => onAddToWishlist(product.id)}
-              >
-                <Heart className="w-4 h-4" />
-              </Button>
-              <Button 
-                size="sm" 
-                variant="secondary" 
-                className="w-8 h-8 p-0 rounded-full"
-                onClick={() => onViewDetails(product)}
-              >
-                <Eye className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Product Info */}
-        <div className="p-4 flex-1 flex flex-col">
-          <div className="mb-3">
-            <Badge variant="outline" className="text-xs mb-2 capitalize">
-              {product.category.replace('-', ' ')}
-            </Badge>
-            <h3 className="font-semibold text-gray-900 mb-1 line-clamp-2">
-              {product.name}
-            </h3>
-            <p className="text-sm text-gray-500 mb-2">{product.brand}</p>
-          </div>
-
-          {/* Rating */}
-          <div className="flex items-center gap-2 mb-3">
-            <div className="flex items-center">
-              {[...Array(5)].map((_, i) => (
-                <Star 
-                  key={i} 
-                  className={`w-3 h-3 ${
-                    i < Math.floor(product.rating) 
-                      ? 'text-yellow-400 fill-current' 
-                      : 'text-gray-300'
-                  }`} 
-                />
-              ))}
-            </div>
-            <span className="text-xs text-gray-600">
-              {product.rating} ({product.reviews})
-            </span>
-          </div>
-
-          {/* Price and Button */}
-          <div className="mt-auto">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <span className="text-lg font-bold text-gray-900">
-                  ${product.price}
-                </span>
-                {product.originalPrice && (
-                  <span className="text-sm text-gray-500 line-through">
-                    ${product.originalPrice}
-                  </span>
-                )}
+            {discountPercentage > 0 && (
+              <div className="absolute top-2 right-2">
+                <Badge className="bg-red-500 text-white text-xs px-2 py-1">
+                  -{discountPercentage}%
+                </Badge>
+              </div>
+            )}
+            
+            {/* Quick Actions */}
+            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="flex flex-col gap-2">
+                <Button 
+                  size="sm" 
+                  variant="secondary" 
+                  className="w-8 h-8 p-0 rounded-full"
+                  onClick={() => onAddToWishlist(product.id)}
+                >
+                  <Heart className="w-4 h-4" />
+                </Button>
+                <Button 
+                  size="sm" 
+                  variant="secondary" 
+                  className="w-8 h-8 p-0 rounded-full"
+                  onClick={() => onViewDetails(product)}
+                >
+                  <Eye className="w-4 h-4" />
+                </Button>
               </div>
             </div>
-            
-            {/* Add to Cart Button */}
-            <Button 
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-              onClick={() => onAddToCart(product)}
-            >
-              <ShoppingCart className="w-4 h-4 mr-2" />
-              Add to Cart
-            </Button>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Product Info - No Card */}
+      <div className="space-y-3">
+        <div>
+          <Badge variant="outline" className="text-xs mb-2 capitalize">
+            {product.category.replace('-', ' ')}
+          </Badge>
+          <h3 className="font-semibold text-gray-900 mb-1 line-clamp-2">
+            {product.name}
+          </h3>
+          <p className="text-sm text-gray-500 mb-2">{product.brand}</p>
         </div>
-      </CardContent>
-    </Card>
+
+        {/* Rating */}
+        <div className="flex items-center gap-2">
+          <div className="flex items-center">
+            {[...Array(5)].map((_, i) => (
+              <Star 
+                key={i} 
+                className={`w-3 h-3 ${
+                  i < Math.floor(product.rating) 
+                    ? 'text-yellow-400 fill-current' 
+                    : 'text-gray-300'
+                }`} 
+              />
+            ))}
+          </div>
+          <span className="text-xs text-gray-600">
+            {product.rating} ({product.reviews})
+          </span>
+        </div>
+
+        {/* Price and Button */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-2">
+            <span className="text-lg font-bold text-gray-900">
+              ${product.price}
+            </span>
+            {product.originalPrice && (
+              <span className="text-sm text-gray-500 line-through">
+                ${product.originalPrice}
+              </span>
+            )}
+          </div>
+          
+          {/* Add to Cart Button */}
+          <Button 
+            size="sm"
+            variant="outline"
+            className="w-fit rounded-full border-gray-300 hover:bg-gray-50"
+            onClick={() => onAddToCart(product)}
+          >
+            <ShoppingCart className="w-4 h-4 mr-1" />
+            Add to Cart
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 };
 
