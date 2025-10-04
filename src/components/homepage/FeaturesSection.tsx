@@ -6,6 +6,7 @@ import {
   UserCheck,
   Brain
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 const FeaturesSection = () => {
   const features = [
@@ -63,19 +64,68 @@ const FeaturesSection = () => {
           scrollbar-width: none;
         }
       `}</style>
-      <section className="relative pt-16 pb-16 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 overflow-hidden">
+      <motion.section 
+        className="relative pt-16 pb-16 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 overflow-hidden"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+      >
       {/* Background Elements */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-100/20 via-transparent to-transparent"></div>
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-green-400/10 to-blue-400/10 rounded-full blur-3xl"></div>
+      <motion.div 
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-100/20 via-transparent to-transparent"
+        animate={{ 
+          scale: [1, 1.1, 1],
+          opacity: [0.3, 0.5, 0.3]
+        }}
+        transition={{ 
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      ></motion.div>
+      <motion.div 
+        className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"
+        animate={{ 
+          x: [0, 30, 0],
+          y: [0, -20, 0]
+        }}
+        transition={{ 
+          duration: 6,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      ></motion.div>
+      <motion.div 
+        className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-green-400/10 to-blue-400/10 rounded-full blur-3xl"
+        animate={{ 
+          x: [0, -20, 0],
+          y: [0, 20, 0]
+        }}
+        transition={{ 
+          duration: 7,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      ></motion.div>
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
 
         {/* Modern Asymmetric Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-24">
+        <motion.div 
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-24"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
           {/* Hero Feature - Large Card */}
-          <div className="lg:col-span-7 group">
+          <motion.div 
+            className="lg:col-span-7 group"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.3 }}
+          >
             <div className="relative h-[400px] rounded-3xl overflow-hidden bg-white transition-all duration-700 cursor-pointer">
               {/* Video Background */}
               <div className="relative h-full">
@@ -108,14 +158,28 @@ const FeaturesSection = () => {
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Side Features - Scrollable */}
-          <div className="lg:col-span-5">
+          <motion.div 
+            className="lg:col-span-5"
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
             <div className="h-[500px] overflow-y-auto space-y-4 pr-2 scrollable-features">
               {/* Scrollable feature cards */}
               {features.slice(1).map((feature, index) => (
-                <div key={index} className="group relative rounded-2xl overflow-hidden bg-white transition-all duration-500 cursor-pointer">
+                <motion.div 
+                  key={index} 
+                  className="group relative rounded-2xl overflow-hidden bg-white transition-all duration-500 cursor-pointer"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  viewport={{ once: true }}
+                >
                   {/* Image */}
                   <div className="relative h-40 overflow-hidden">
                     <img 
@@ -144,33 +208,60 @@ const FeaturesSection = () => {
                       <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
 
         {/* Modern CTA Section */}
-        <div className="relative overflow-hidden rounded-3xl bg-gray-100 p-16 text-center">
-          <div className="relative">
-            <h3 className="text-4xl lg:text-5xl font-md text-black mb-6 leading-tight">
+        <motion.div 
+          className="relative overflow-hidden rounded-3xl bg-gray-100 p-16 text-center"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <motion.div 
+            className="relative"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.3 }}
+          >
+            <motion.h3 
+              className="text-4xl lg:text-5xl font-md text-black mb-6 leading-tight"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              viewport={{ once: true }}
+            >
               Ready to Transform Your
               <br />
               <span className=" text-black">
                 Health Journey?
               </span>
-            </h3>
+            </motion.h3>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <Button variant="outline" className="black/30 text-black hover:bg-black/10 px-12 py-4 text-lg rounded-2xl font-semibold backdrop-blur-sm">
-               Download
-          </Button>
-            </div>
-          </div>
-        </div>
+            <motion.div 
+              className="flex flex-col sm:flex-row items-center justify-center gap-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.0 }}
+              viewport={{ once: true }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button variant="outline" className="black/30 text-black hover:bg-black/10 px-12 py-4 text-lg rounded-2xl font-semibold backdrop-blur-sm">
+                 Download
+                </Button>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
     </>
   );
 };

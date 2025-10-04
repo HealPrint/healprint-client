@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ExternalLink } from "lucide-react";
+import { motion } from "framer-motion";
 
 const MarketplaceSection = () => {
   const navigate = useNavigate();
@@ -93,46 +94,87 @@ const MarketplaceSection = () => {
   ];
 
   return (
-    <section className="pt-8 pb-24 bg-gradient-to-br from-gray-50 to-blue-50">
+    <motion.section 
+      className="pt-8 pb-24 bg-gradient-to-br from-gray-50 to-blue-50"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-12">
+        <motion.div 
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
           <h2 className="text-3xl sm:text-4xl font-md text-gray-900 mb-4">
             Recommended Products
           </h2>
           <p className="text-md text-gray-600 max-w-2xl mx-auto mb-8">
             Discover products recommended by our health experts for your skin and hair concerns
           </p>
-
-        </div>
+        </motion.div>
 
         {/* Moving Product Slider */}
-        <div className="relative overflow-hidden">
-          <div className="flex animate-scroll space-x-6">
+        <motion.div 
+          className="relative overflow-hidden"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true }}
+        >
+          <motion.div 
+            className="flex animate-scroll space-x-6"
+            whileHover={{ animationPlayState: "paused" }}
+          >
             {/* Duplicate products for seamless loop */}
             {[...products, ...products].map((product, index) => (
-              <div key={`${product.id}-${index}`} className="flex-shrink-0 w-32 h-32 rounded-full overflow-hidden bg-white transition-all duration-300 group cursor-pointer">
+              <motion.div 
+                key={`${product.id}-${index}`} 
+                className="flex-shrink-0 w-32 h-32 rounded-full overflow-hidden bg-white transition-all duration-300 group cursor-pointer"
+                whileHover={{ scale: 1.1, y: -5 }}
+                transition={{ duration: 0.3 }}
+              >
                 <img 
                   src={product.image} 
                   alt={product.name}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
-              </div> 
+              </motion.div> 
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Scroll Indicator */}
-        <div className="text-center mt-8">
-          <button 
+        <motion.div 
+          className="text-center mt-8"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <motion.button 
             onClick={() => navigate('/marketplace')}
             className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 transition-colors duration-200 cursor-pointer group"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse group-hover:bg-blue-700"></div>
+            <motion.div 
+              className="w-2 h-2 bg-blue-600 rounded-full animate-pulse group-hover:bg-blue-700"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            ></motion.div>
             <span className="group-hover:underline">Scroll to see more products</span>
-            <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse group-hover:bg-blue-700"></div>
-          </button>
-        </div>
+            <motion.div 
+              className="w-2 h-2 bg-blue-600 rounded-full animate-pulse group-hover:bg-blue-700"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
+            ></motion.div>
+          </motion.button>
+        </motion.div>
       </div>
 
       {/* Custom CSS for animation */}
@@ -161,7 +203,7 @@ const MarketplaceSection = () => {
           overflow: hidden;
         }
       `}</style>
-    </section>
+    </motion.section>
   );
 };
 
