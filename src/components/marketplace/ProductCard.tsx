@@ -149,7 +149,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   // Grid view (default)
   return (
-    <div className="group cursor-pointer">
+    <div className="group cursor-pointer mb-10">
       {/* Product Image with Card */}
       <Card className="bg-white hover:shadow-lg transition-all duration-300 mb-4">
         <CardContent className="p-0">
