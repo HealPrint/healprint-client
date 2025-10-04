@@ -5,7 +5,9 @@ import {
   Mic,
   ArrowRight,
   Loader2,
-  Plus
+  Plus,
+  AlertCircle,
+  X
 } from "lucide-react";
 import { useChat } from "../../hooks/chat";
 
@@ -43,6 +45,7 @@ const HomePage = ({ onNewChat, onSelectConversation }: HomePageProps) => {
   const { 
     messages, 
     isLoading, 
+    error,
     sendMessage, 
     clearChat, 
     currentConversationId,
@@ -80,6 +83,13 @@ const HomePage = ({ onNewChat, onSelectConversation }: HomePageProps) => {
       setTimeout(() => {
         scrollToBottom();
       }, 100);
+    }
+  };
+
+  const handleClearInput = () => {
+    setSearchQuery("");
+    if (inputRef.current) {
+      inputRef.current.focus();
     }
   };
 
@@ -282,6 +292,22 @@ const HomePage = ({ onNewChat, onSelectConversation }: HomePageProps) => {
                 </div>
               )}
 
+              {/* Error State */}
+              {error && (
+                <div className="mb-4 sm:mb-8">
+                  <div className="flex items-start space-x-2 sm:space-x-3 py-3 sm:py-4">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center flex-shrink-0 mt-1">
+                      <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-red-500" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-red-600 text-sm sm:text-base">
+                        {error}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Scroll anchor */}
               <div ref={resultsEndRef} className="h-4" />
             </div>
@@ -316,22 +342,23 @@ const HomePage = ({ onNewChat, onSelectConversation }: HomePageProps) => {
                   <Button 
                     variant="ghost" 
                     size="sm" 
-                    className="w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9 p-0 text-gray-400 hover:text-[#2F4F5F] hover:bg-[#2F4F5F]/10 rounded-full"
+                    onClick={handleClearInput}
+                    className="hover:bg-gray-100 p-1 sm:p-2"
                     disabled={isLoading}
                   >
-                    <Mic className="w-3 h-3 sm:w-3 sm:h-3 lg:w-4 lg:h-4" />
+                    <X className="w-4 h-4 text-gray-400" />
                   </Button>
                   <Button 
-                    size="sm" 
-                    className="w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9 p-0 bg-[#2F4F5F] hover:bg-[#2F4F5F]/90 text-white rounded-full shadow-sm disabled:opacity-50"
                     onClick={() => handleSearch()}
-                    disabled={isLoading || !searchQuery.trim()}
+                    disabled={!searchQuery.trim() || isLoading}
+                    className="bg-[#2F4F5F] hover:bg-[#1e3a47] text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-md transition-colors duration-200 flex items-center space-x-1 sm:space-x-2"
                   >
                     {isLoading ? (
-                      <Loader2 className="w-3 h-3 sm:w-3 sm:h-3 lg:w-4 lg:h-4 animate-spin" />
+                      <Loader2 className="w-4 h-4 animate-spin" />
                     ) : (
-                      <ArrowRight className="w-3 h-3 sm:w-3 sm:h-3 lg:w-4 lg:h-4" />
+                      <ArrowRight className="w-4 h-4" />
                     )}
+                    <span className="hidden sm:inline text-sm font-medium">Search</span>
                   </Button>
                 </div>
               </div>
