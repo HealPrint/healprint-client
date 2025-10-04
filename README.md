@@ -363,6 +363,29 @@ For support, email support@healprint.com or join our Discord community.
 - [ ] Health data export and integration
 - [ ] Advanced analytics and insights
 
+## 🔧 SPA Routing Fix for Vercel
+
+### The Problem
+When deploying React SPAs to Vercel, you might encounter 404 errors when accessing routes directly (like `/chat` or `/marketplace`). This happens because Vercel doesn't know how to handle client-side routing.
+
+### The Solution
+This project includes proper SPA routing configuration:
+
+1. **`vercel.json`** - Contains rewrite rules to handle client-side routing
+2. **`public/_redirects`** - Fallback redirects for SPA routing
+3. **Proper headers** - Security and caching configurations
+
+### Files Included
+- `vercel.json` - Vercel configuration with SPA routing
+- `public/_redirects` - Netlify-style redirects as backup
+- `netlify.toml` - Alternative deployment configuration
+
+### If You Still Get 404 Errors
+1. Check that `vercel.json` is in your project root
+2. Verify the `_redirects` file is in the `public` folder
+3. Redeploy after making changes to these files
+4. Clear browser cache and try again
+
 ---
 
 <div align="center">
