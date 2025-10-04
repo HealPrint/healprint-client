@@ -15,7 +15,7 @@ const MarketplaceSection = () => {
       originalPrice: 34.99,
       rating: 4.8,
       reviews: 124,
-      image: "/assets/christin-hume-0MoF-Fe0w0A-unsplash_ukakzp.jpg",
+      image: "/assets/product1.jpg",
       category: "Skincare",
       discount: 29,
       isNew: false,
@@ -29,63 +29,63 @@ const MarketplaceSection = () => {
       originalPrice: 25.00,
       rating: 4.6,
       reviews: 89,
-      image: "/assets/woman-with-tablet-device-illustrating-min_zvux1l.jpg",
+      image: "/assets/product2.jpg",
       category: "Hair Care",
       discount: 26,
       isNew: true,
       isBestSeller: false
     },
     {
-      id: 4,
+      id: 3,
       name: "Omega-3 Skin Health Capsules",
       brand: "NutriSkin",
       price: 28.75,
       originalPrice: 35.00,
       rating: 4.7,
       reviews: 156,
-      image: "/assets/retinal-biometrics-technology-with-man-s-eye-digital-remix-min_dhuks8.jpg",
+      image: "/assets/product3.jpg",
       category: "Supplements",
       discount: 18,
       isNew: false,
       isBestSeller: false
     },
     {
-      id: 5,
+      id: 4,
       name: "Gentle Cleansing Foam",
       brand: "PureFace",
       price: 15.99,
       originalPrice: 22.00,
       rating: 4.5,
       reviews: 78,
-      image: "/assets/christin-hume-0MoF-Fe0w0A-unsplash_ukakzp.jpg",
+      image: "/assets/product4.jpg",
       category: "Skincare",
       discount: 27,
       isNew: true,
       isBestSeller: false
     },
     {
-      id: 6,
+      id: 5,
       name: "Collagen Hair Mask",
       brand: "HairVital",
       price: 22.50,
       originalPrice: 30.00,
       rating: 4.8,
       reviews: 92,
-      image: "/assets/woman-with-tablet-device-illustrating-min_zvux1l.jpg",
+      image: "/assets/product5.jpg",
       category: "Hair Care",
       discount: 25,
       isNew: false,
       isBestSeller: true
     },
     {
-      id: 7,
+      id: 6,
       name: "Probiotic Skin Support",
       brand: "GutGlow",
       price: 35.99,
       originalPrice: 45.00,
       rating: 4.6,
       reviews: 134,
-      image: "/assets/retinal-biometrics-technology-with-man-s-eye-digital-remix-min_dhuks8.jpg",
+      image: "/assets/product6.jpg",
       category: "Supplements",
       discount: 20,
       isNew: true,
@@ -150,29 +150,27 @@ const MarketplaceSection = () => {
 
         {/* Scroll Indicator */}
         <motion.div 
-          className="text-center mt-8"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          className="text-center mt-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
           viewport={{ once: true }}
         >
           <motion.button 
-            onClick={() => navigate('/marketplace')}
-            className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 transition-colors duration-200 cursor-pointer group"
-            whileHover={{ scale: 1.05 }}
+            onClick={() => {
+              navigate('/marketplace');
+              // Scroll to top after navigation
+              setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }, 100);
+            }}
+            className="inline-flex items-center gap-3 px-6 py-3 bg-[#2F4F5F] hover:bg-[#1e3a47] text-white rounded-full transition-all duration-300 cursor-pointer group"
+            whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
           >
-            <motion.div 
-              className="w-2 h-2 bg-blue-600 rounded-full animate-pulse group-hover:bg-blue-700"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            ></motion.div>
-            <span className="group-hover:underline">Scroll to see more products</span>
-            <motion.div 
-              className="w-2 h-2 bg-blue-600 rounded-full animate-pulse group-hover:bg-blue-700"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
-            ></motion.div>
+            <span className="font-semibold text-base group-hover:text-gray-100 transition-colors">
+              see more products
+            </span>
           </motion.button>
         </motion.div>
       </div>

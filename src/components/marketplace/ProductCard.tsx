@@ -58,11 +58,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               />
               {/* Badges */}
               <div className="absolute top-1 left-1">
-                {product.isNew && (
-                  <Badge className="bg-green-500 text-white text-xs px-1 py-0.5">
-                    New
-                  </Badge>
-                )}
+                {/* Badges removed */}
               </div>
             </div>
 
@@ -164,16 +160,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           />
           {/* Badges */}
           <div className="absolute top-2 left-2">
-            {product.isNew && (
-              <Badge className="bg-green-500 text-white text-xs px-2 py-1">
-                New
-              </Badge>
-            )}
-            {product.isBestSeller && (
-              <Badge className="bg-orange-500 text-white text-xs px-2 py-1 ml-1">
-                Best Seller
-              </Badge>
-            )}
+            {/* Badges removed */}
           </div>
           {discountPercentage > 0 && (
             <div className="absolute top-2 right-2">

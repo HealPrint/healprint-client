@@ -74,7 +74,7 @@ const MarketplaceContent = () => {
       originalPrice: 34.99,
       rating: 4.8,
       reviews: 124,
-      image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&h=400&fit=crop&crop=center&auto=format&q=80",
+      image: "/assets/product1.jpg",
       category: "skincare",
       discount: 29,
       isNew: false,
@@ -94,7 +94,7 @@ const MarketplaceContent = () => {
       originalPrice: 25.00,
       rating: 4.6,
       reviews: 89,
-      image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=400&fit=crop&crop=center&auto=format&q=80",
+      image: "/assets/product2.jpg",
       category: "hair-care",
       discount: 26,
       isNew: true,
@@ -114,7 +114,7 @@ const MarketplaceContent = () => {
       originalPrice: 35.00,
       rating: 4.7,
       reviews: 156,
-      image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=400&fit=crop&crop=center&auto=format&q=80",
+      image: "/assets/product3.jpg",
       category: "supplements",
       discount: 18,
       isNew: false,
@@ -134,7 +134,7 @@ const MarketplaceContent = () => {
       originalPrice: 22.00,
       rating: 4.5,
       reviews: 78,
-      image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&h=400&fit=crop&crop=center&auto=format&q=80",
+      image: "/assets/product4.jpg",
       category: "skincare",
       discount: 27,
       isNew: true,
@@ -154,12 +154,17 @@ const MarketplaceContent = () => {
       originalPrice: 30.00,
       rating: 4.8,
       reviews: 92,
-      image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=400&fit=crop&crop=center&auto=format&q=80",
+      image: "/assets/product5.jpg",
       category: "hair-care",
       discount: 25,
       isNew: false,
       isBestSeller: true,
-      description: "Intensive treatment mask for damaged and weak hair"
+      description: "Intensive treatment mask for damaged and weak hair",
+      ingredients: ["Collagen", "Keratin", "Argan Oil"],
+      benefits: ["Repairs damaged hair", "Adds shine", "Strengthens hair structure"],
+      usage: "Apply to damp hair, leave for 15-20 minutes, then rinse",
+      size: "200ml",
+      inStock: true
     },
     {
       id: 6,
@@ -169,12 +174,17 @@ const MarketplaceContent = () => {
       originalPrice: 45.00,
       rating: 4.6,
       reviews: 134,
-      image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=400&fit=crop&crop=center&auto=format&q=80",
+      image: "/assets/product6.jpg",
       category: "supplements",
       discount: 20,
       isNew: true,
       isBestSeller: false,
-      description: "Probiotic blend for healthy gut and clear skin"
+      description: "Probiotic blend for healthy gut and clear skin",
+      ingredients: ["Lactobacillus", "Bifidobacterium", "Prebiotics"],
+      benefits: ["Improves gut health", "Reduces skin inflammation", "Supports clear skin"],
+      usage: "Take 1 capsule daily with water on empty stomach",
+      size: "60 capsules",
+      inStock: true
     },
     {
       id: 7,
@@ -184,12 +194,17 @@ const MarketplaceContent = () => {
       originalPrice: 28.00,
       rating: 4.7,
       reviews: 98,
-      image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&h=400&fit=crop&crop=center&auto=format&q=80",
+      image: "/assets/producut7.jpg",
       category: "skincare",
       discount: 29,
       isNew: false,
       isBestSeller: false,
-      description: "Controls oil production and minimizes pores"
+      description: "Controls oil production and minimizes pores",
+      ingredients: ["Niacinamide", "Salicylic Acid", "Tea Tree Extract"],
+      benefits: ["Controls excess oil", "Minimizes pores", "Prevents breakouts"],
+      usage: "Apply to clean skin morning and evening",
+      size: "50ml",
+      inStock: true
     },
     {
       id: 8,
@@ -199,12 +214,17 @@ const MarketplaceContent = () => {
       originalPrice: 50.00,
       rating: 4.8,
       reviews: 145,
-      image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=400&fit=crop&crop=center&auto=format&q=80",
+      image: "/assets/christin-hume-0MoF-Fe0w0A-unsplash_ukakzp.jpg",
       category: "hair-care",
       discount: 24,
       isNew: false,
       isBestSeller: true,
-      description: "Professional keratin treatment for smooth, shiny hair"
+      description: "Professional keratin treatment for smooth, shiny hair",
+      ingredients: ["Keratin", "Silicone", "Vitamin E"],
+      benefits: ["Smooths hair texture", "Adds shine", "Reduces frizz"],
+      usage: "Apply to clean, damp hair, leave for 30 minutes, then rinse",
+      size: "250ml",
+      inStock: true
     }
   ];
 
@@ -344,21 +364,21 @@ const MarketplaceContent = () => {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Bar */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-blue-600">{filteredProducts.length}</div>
-            <div className="text-sm text-gray-600">Products Found</div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div className="bg-white rounded-lg p-4 text-center shadow-sm border">
+            <div className="text-2xl font-semibold text-gray-900 mb-1">{filteredProducts.length}</div>
+            <div className="text-sm text-gray-600">Products</div>
           </div>
-          <div className="bg-white rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-green-600">4.8</div>
-            <div className="text-sm text-gray-600">Avg Rating</div>
+          <div className="bg-white rounded-lg p-4 text-center shadow-sm border">
+            <div className="text-2xl font-semibold text-gray-900 mb-1">4.8</div>
+            <div className="text-sm text-gray-600">Rating</div>
           </div>
-          <div className="bg-white rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-orange-600">25%</div>
-            <div className="text-sm text-gray-600">Avg Discount</div>
+          <div className="bg-white rounded-lg p-4 text-center shadow-sm border">
+            <div className="text-2xl font-semibold text-gray-900 mb-1">25%</div>
+            <div className="text-sm text-gray-600">Off</div>
           </div>
-          <div className="bg-white rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-purple-600">Free</div>
+          <div className="bg-white rounded-lg p-4 text-center shadow-sm border">
+            <div className="text-2xl font-semibold text-gray-900 mb-1">Free</div>
             <div className="text-sm text-gray-600">Shipping</div>
           </div>
         </div>
