@@ -59,12 +59,12 @@ const DashboardContent = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex w-full">
       {/* Mobile Top Navbar - ChatGPT style */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200" style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}>
         <div className="flex items-center justify-between px-4 py-3">
           {/* Left side - ChatGPT menu icon */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 -ml-2"
+            className="p-2 -ml-2 hover:bg-gray-100 rounded-full transition-colors"
           >
             {isMobileMenuOpen ? (
               <X className="w-6 h-6" />
@@ -78,17 +78,17 @@ const DashboardContent = () => {
           {/* Center - HealPrint branding */}
           <div className="flex items-center space-x-2">
             <img 
-              src="https://res.cloudinary.com/ecosheane/image/upload/v1756552072/Logo_jvn2t4.png" 
+              src="/assets/Remifi_logo_wbl8fg.png" 
               alt="HealPrint Logo" 
-              className="h-6 w-auto grayscale"
+              className="h-6 w-auto"
             />
             <h1 className="font-semibold text-gray-900 text-base">HealPrint</h1>
           </div>
           
           {/* Right side - ChatGPT new chat icon */}
           <button
-            onClick={() => handleTabChange("home")}
-            className="p-2 -mr-2"
+            onClick={() => handleNewChat()}
+            className="p-2 -mr-2 hover:bg-gray-100 rounded-full transition-colors"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"/>
@@ -149,7 +149,7 @@ const DashboardContent = () => {
       
       {/* Main Content */}
       <div className="flex-1 flex flex-col w-full lg:ml-20">
-        <div className="flex-1 pt-16 lg:pt-0">
+        <div className="flex-1 pt-16 lg:pt-0" style={{ minHeight: 'calc(100vh - 4rem)' }}>
           {renderContent()}
         </div>
       </div>
