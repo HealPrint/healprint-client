@@ -165,7 +165,7 @@ const HomePage = ({ onNewChat, onSelectConversation }: HomePageProps) => {
   }, [isLoading]);
 
   return (
-    <div className="h-screen bg-white flex flex-col w-full">
+    <div className="h-screen bg-white flex flex-col w-full overflow-hidden">
       {/* Initial centered layout - like ChatGPT */}
       {!hasMessages && (
         <div className="flex-1 flex flex-col items-center justify-center px-4 pt-20 lg:pt-0" style={{ minHeight: 'calc(100vh - 5rem)' }}>
@@ -240,7 +240,8 @@ const HomePage = ({ onNewChat, onSelectConversation }: HomePageProps) => {
           className="flex-1 overflow-y-auto scrollbar-thin smooth-scroll"
           style={{ 
             paddingTop: '5rem', // Account for mobile header
-            paddingBottom: '1rem'
+            paddingBottom: '1rem',
+            maxHeight: 'calc(100vh - 5rem - 80px)' // Account for header and input
           }}
         >
           <div className="max-w-2xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
