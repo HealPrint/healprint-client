@@ -227,6 +227,9 @@
   /* Mobile content with header offset */
   .mobile-content {
     padding-top: 5rem; /* 80px for mobile header */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
   
   @media (min-width: 1024px) {

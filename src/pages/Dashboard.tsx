@@ -151,7 +151,7 @@ const DashboardContent = () => {
       
       {/* Main Content */}
       <div className="flex-1 flex flex-col w-full lg:ml-20">
-        <div className="flex-1 mobile-content" style={{ minHeight: 'calc(100vh - 5rem)' }}>
+        <div className="flex-1 mobile-content h-full">
           {renderContent()}
         </div>
       </div>

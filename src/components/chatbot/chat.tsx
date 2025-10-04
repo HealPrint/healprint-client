@@ -155,7 +155,7 @@ const HomePage = ({ onNewChat, onSelectConversation }: HomePageProps) => {
   }, [isLoading]);
 
   return (
-    <div className="min-h-screen bg-white flex flex-col w-full">
+    <div className="h-screen bg-white flex flex-col w-full">
       {/* Initial centered layout - like ChatGPT */}
       {!hasMessages && (
         <div className="flex-1 flex flex-col items-center justify-center px-4 pt-20 lg:pt-0" style={{ minHeight: 'calc(100vh - 5rem)' }}>
@@ -229,12 +229,11 @@ const HomePage = ({ onNewChat, onSelectConversation }: HomePageProps) => {
           ref={scrollContainerRef}
           className="flex-1 overflow-y-auto scrollbar-thin smooth-scroll"
           style={{ 
-            maxHeight: 'calc(100vh - 140px)',
             paddingTop: '5rem', // Account for mobile header
-            paddingBottom: 'env(safe-area-inset-bottom, 8rem)'
+            paddingBottom: '1rem'
           }}
         >
-          <div className="max-w-2xl mx-auto px-3 sm:px-4 py-4 sm:py-8 pb-32 sm:pb-32">
+          <div className="max-w-2xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
             
             {/* Messages Container */}
             <div key={currentConversationId || 'new-chat'} className="space-y-4 sm:space-y-8">
@@ -290,9 +289,9 @@ const HomePage = ({ onNewChat, onSelectConversation }: HomePageProps) => {
         </div>
       )}
 
-      {/* Floating Input - Mobile Optimized */}
+      {/* Fixed Input - Mobile Optimized */}
       {hasMessages && (
-        <div className="fixed bottom-0 left-0 right-0 z-20 bg-white border-t border-gray-200 p-3 sm:p-4 sm:relative sm:border-t-0 sm:bg-transparent sm:px-0" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0.75rem)' }}>
+        <div className="flex-shrink-0 bg-white border-t border-gray-200 p-3 sm:p-4" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0.75rem)' }}>
           <div className="max-w-2xl mx-auto">
             <div className="relative rounded-lg border border-gray-200 shadow-lg hover:shadow-xl focus-within:shadow-xl focus-within:border-[#2F4F5F] transition-all duration-200 bg-white">
               <div className="flex items-center pl-3 sm:pl-4 lg:pl-6 pr-1 sm:pr-2 py-3 sm:py-4 lg:py-6">
