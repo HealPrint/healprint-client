@@ -158,7 +158,7 @@ const HomePage = ({ onNewChat, onSelectConversation }: HomePageProps) => {
     <div className="min-h-screen bg-white flex flex-col w-full">
       {/* Initial centered layout - like ChatGPT */}
       {!hasMessages && (
-        <div className="flex-1 flex flex-col items-center justify-center px-4 pt-16 lg:pt-0" style={{ minHeight: 'calc(100vh - 4rem)' }}>
+        <div className="flex-1 flex flex-col items-center justify-center px-4 pt-20 lg:pt-0" style={{ minHeight: 'calc(100vh - 5rem)' }}>
           {/* Logo */}
           <div className="mb-8">
             <div className="text-3xl sm:text-4xl font-bold text-[#2F4F5F]">
@@ -229,8 +229,8 @@ const HomePage = ({ onNewChat, onSelectConversation }: HomePageProps) => {
           ref={scrollContainerRef}
           className="flex-1 overflow-y-auto scrollbar-thin smooth-scroll"
           style={{ 
-            maxHeight: 'calc(100vh - 120px)',
-            paddingTop: '4rem', // Account for mobile header
+            maxHeight: 'calc(100vh - 140px)',
+            paddingTop: '5rem', // Account for mobile header
             paddingBottom: 'env(safe-area-inset-bottom, 8rem)'
           }}
         >

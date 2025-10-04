@@ -53,29 +53,6 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
   return (
     <div className="flex flex-col h-screen max-h-[800px] bg-gray-50 rounded-none sm:rounded-2xl border-0 sm:border border-gray-200 w-full relative">
-      {/* Mobile: ChatGPT-style Top Navbar */}
-      <div className="sm:hidden flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-white sticky top-0 z-10">
-        {/* Left side - Back button */}
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onBack}
-          className="hover:bg-gray-100 p-2 -ml-2"
-        >
-          <ArrowLeft className="w-4 h-4" />
-        </Button>
-        
-        {/* Center - HealPrint name with icon */}
-        <div className="flex items-center space-x-2">
-          <div className="w-6 h-6 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center">
-            <Brain className="w-4 h-4 text-white" />
-          </div>
-          <h1 className="font-semibold text-gray-900 text-base">HealPrint</h1>
-        </div>
-        
-        {/* Right side - Empty space for balance */}
-        <div className="w-10"></div>
-      </div>
 
       {/* Desktop: Original Header */}
       <div className="hidden sm:flex items-center justify-between p-3 sm:p-4 border-b border-gray-200 bg-white rounded-none sm:rounded-t-2xl">

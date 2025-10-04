@@ -59,12 +59,12 @@ const DashboardContent = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex w-full">
       {/* Mobile Top Navbar - ChatGPT style */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200" style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}>
-        <div className="flex items-center justify-between px-4 py-3">
+      <div className="lg:hidden mobile-header" style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}>
+        <div className="flex items-center justify-between px-4 py-3 h-16">
           {/* Left side - ChatGPT menu icon */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 -ml-2 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 -ml-2 hover:bg-gray-100 rounded-full transition-colors touch-target"
           >
             {isMobileMenuOpen ? (
               <X className="w-6 h-6" />
@@ -76,7 +76,7 @@ const DashboardContent = () => {
           </button>
           
           {/* Center - HealPrint branding */}
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 flex-1 justify-center">
             <img 
               src="/assets/Remifi_logo_wbl8fg.png" 
               alt="HealPrint Logo" 
@@ -88,7 +88,7 @@ const DashboardContent = () => {
           {/* Right side - ChatGPT new chat icon */}
           <button
             onClick={() => handleNewChat()}
-            className="p-2 -mr-2 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 -mr-2 hover:bg-gray-100 rounded-full transition-colors touch-target"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"/>
@@ -116,7 +116,7 @@ const DashboardContent = () => {
       </div>
 
       {/* Mobile Navigation Dropdown - ChatGPT style */}
-      <div className={`fixed top-16 left-4 right-4 z-40 lg:hidden transform transition-all duration-300 ease-in-out ${
+      <div className={`fixed top-20 left-4 right-4 z-40 lg:hidden transform transition-all duration-300 ease-in-out ${
         isMobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0 pointer-events-none'
       }`}>
         <div className="bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden">
@@ -149,7 +149,7 @@ const DashboardContent = () => {
       
       {/* Main Content */}
       <div className="flex-1 flex flex-col w-full lg:ml-20">
-        <div className="flex-1 pt-16 lg:pt-0" style={{ minHeight: 'calc(100vh - 4rem)' }}>
+        <div className="flex-1 mobile-content" style={{ minHeight: 'calc(100vh - 5rem)' }}>
           {renderContent()}
         </div>
       </div>

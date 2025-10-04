@@ -211,6 +211,29 @@
     height: calc(var(--vh, 1vh) * 100);
   }
   
+  /* Fixed mobile header */
+  .mobile-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Mobile content with header offset */
+  .mobile-content {
+    padding-top: 5rem; /* 80px for mobile header */
+  }
+  
+  @media (min-width: 1024px) {
+    .mobile-content {
+      padding-top: 0;
+    }
+  }
+  
   /* Prevent text selection on mobile UI elements */
   .no-select {
     -webkit-user-select: none;
