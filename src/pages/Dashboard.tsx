@@ -57,8 +57,8 @@ const DashboardContent = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex w-full">
-      {/* Mobile Top Navbar - ChatGPT style */}
+    <>
+      {/* Mobile Top Navbar - Fixed at top */}
       <div className="lg:hidden mobile-header" style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}>
         <div className="flex items-center justify-between px-4 py-3 h-16">
           {/* Left side - ChatGPT menu icon */}
@@ -97,13 +97,15 @@ const DashboardContent = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
-      )}
+      <div className="min-h-screen bg-gray-50 flex w-full">
+
+        {/* Mobile Menu Overlay */}
+        {isMobileMenuOpen && (
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
 
       {/* Desktop Navigation Sidebar */}
       <div className="hidden lg:block">
@@ -115,10 +117,10 @@ const DashboardContent = () => {
              />
       </div>
 
-      {/* Mobile Navigation Dropdown - ChatGPT style */}
-      <div className={`fixed top-20 left-4 right-4 z-40 lg:hidden transform transition-all duration-300 ease-in-out ${
-        isMobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0 pointer-events-none'
-      }`}>
+        {/* Mobile Navigation Dropdown - ChatGPT style */}
+        <div className={`fixed top-20 left-4 right-4 z-40 lg:hidden transform transition-all duration-300 ease-in-out ${
+          isMobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0 pointer-events-none'
+        }`}>
         <div className="bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden">
           <div className="p-2">
             {[
@@ -153,7 +155,8 @@ const DashboardContent = () => {
           {renderContent()}
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 
