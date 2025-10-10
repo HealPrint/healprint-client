@@ -28,6 +28,11 @@ class GoogleAuthService {
 
       const data = await response.json();
       
+      // Store redirect_uri from backend to use in callback
+      if (data.redirect_uri) {
+        sessionStorage.setItem('google_redirect_uri', data.redirect_uri);
+      }
+      
       // Redirect user to Google OAuth page (managed by backend)
       window.location.href = data.url;
     } catch (error) {
@@ -42,8 +47,13 @@ class GoogleAuthService {
    */
   async handleCallback(code: string, state?: string): Promise<any> {
     try {
-      // Use consistent redirect URI (matches backend GOOGLE_REDIRECT_URI)
-      const redirectUri = import.meta.env.VITE_GOOGLE_REDIRECT_URI || 'https://healprint.xyz/auth/google/callback';
+      // Use the same redirect URI that was used to initiate the OAuth flow
+      const redirectUri = sessionStorage.getItem('google_redirect_uri') || 
+                         import.meta.env.VITE_GOOGLE_REDIRECT_URI || 
+                         'https://healprint.xyz/auth/google/callback';
+      
+      // Clean up stored redirect URI
+      sessionStorage.removeItem('google_redirect_uri');
       
       const response = await fetch(`${this.apiBaseUrl}/auth/google/callback`, {
         method: 'POST',
