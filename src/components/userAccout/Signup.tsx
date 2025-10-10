@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Eye, EyeOff } from 'lucide-react';
-import { googleAuthService } from '../../services/googleAuthService';
 import HealthProfileOnboarding from './HealthProfileOnboarding';
 
 const Signup = () => {
@@ -68,12 +67,10 @@ const Signup = () => {
 
   const handleGoogleSignup = async () => {
     try {
+      // Redirect to backend-initiated Google OAuth flow
       await googleLogin();
-      toast({
-        title: "Success",
-        description: "Account created with Google successfully!",
-      });
-      setShowHealthProfile(true);
+      // User will be redirected to Google, no need for toast or profile here
+      // The callback will handle navigation after successful auth
     } catch (err) {
       toast({
         title: "Error",
@@ -92,19 +89,6 @@ const Signup = () => {
   const handleHealthProfileSkip = () => {
     navigate('/chat');
   };
-
-  // Initialize Google Auth on component mount
-  useEffect(() => {
-    const initGoogleAuth = async () => {
-      try {
-        await googleAuthService.initializeGoogleAuth();
-      } catch (error) {
-        console.error('Failed to initialize Google Auth:', error);
-      }
-    };
-    
-    initGoogleAuth();
-  }, []);
 
   const handleBackToEmail = () => {
     setStep(1);

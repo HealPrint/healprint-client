@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Link, useNavigate } from 'react-router-dom';
@@ -50,12 +50,9 @@ const Login = () => {
 
   const handleGoogleAuth = async () => {
     try {
-      await googleLogin();
-      toast({
-        title: "Success",
-        description: "Logged in with Google successfully!",
-      });
-      navigate('/chat');
+      // Redirect to backend-initiated Google OAuth flow
+      await googleAuthService.initiateGoogleLogin();
+      // User will be redirected to Google, no need for toast or navigation here
     } catch (err) {
       toast({
         title: "Error",
@@ -64,19 +61,6 @@ const Login = () => {
       });
     }
   };
-
-  // Initialize Google Auth on component mount
-  useEffect(() => {
-    const initGoogleAuth = async () => {
-      try {
-        await googleAuthService.initializeGoogleAuth();
-      } catch (error) {
-        console.error('Failed to initialize Google Auth:', error);
-      }
-    };
-    
-    initGoogleAuth();
-  }, []);
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-4">

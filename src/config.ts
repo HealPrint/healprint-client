@@ -1,24 +1,5 @@
 // HealPrint Client Configuration
-interface Config {
-  USER_API_URL: string;
-  CHAT_API_URL: string;
-  API_URL: string;
-  GOOGLE_CLIENT_ID: string;
-  IS_DEVELOPMENT: boolean;
-  IS_PRODUCTION: boolean;
-}
-
-// Environment validation - only validate when actually accessing the values
-const validateEnvironment = () => {
-  const requiredVars = ['VITE_GOOGLE_CLIENT_ID'];
-  const missing = requiredVars.filter(varName => !import.meta.env[varName]);
-  
-  if (missing.length > 0) {
-    console.error(`Missing required environment variables: ${missing.join(', ')}`);
-    return false;
-  }
-  return true;
-};
+import type { Config } from '@/types';
 
 // Primary service URLs (can be overridden by env)
 const USER_API_URL = 'https://healprint-server-auth.onrender.com';
@@ -40,16 +21,6 @@ export const config: Config = {
   // Legacy API_URL for backward compatibility (points to user service)
   get API_URL() {
     return this.USER_API_URL;
-  },
-
-  // Google OAuth Configuration
-  get GOOGLE_CLIENT_ID() {
-    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-    if (!clientId) {
-      validateEnvironment();
-      throw new Error('VITE_GOOGLE_CLIENT_ID environment variable is required');
-    }
-    return clientId;
   },
 
   // Environment detection

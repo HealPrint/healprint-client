@@ -1,48 +1,8 @@
 // HealPrint AI Backend Service Integration
 import { config } from '../config';
+import type { ChatMessage, ChatResponse, Message, ConversationHistory, ConversationSummary } from '@/types';
 
 const API_BASE_URL = config.CHAT_API_URL;
-
-export interface ChatMessage {
-  role: 'user' | 'assistant';
-  content: string;
-  timestamp?: string;
-}
-
-export interface ChatResponse {
-  response: string;
-  conversation_id: string;
-  message_id: string; 
-  assessment_stage: string;
-  symptoms_collected: Record<string, any>;
-  needs_diagnosis: boolean;
-  error?: string;
-}
-
-export interface Message {
-  id?: string;
-  role: 'user' | 'assistant';
-  content: string;
-  timestamp: string;
-  message_id?: string;
-}
-
-export interface ConversationHistory {
-  conversation_id: string;
-  messages: Message[];
-  title: string;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface ConversationSummary {
-  conversation_id: string;
-  title: string;
-  last_message: string;
-  message_count: number;
-  created_at: string;
-  updated_at: string;
-}
 
 export class HealPrintService {
   private static userId = 'user_' + Math.random().toString(36).substr(2, 9);

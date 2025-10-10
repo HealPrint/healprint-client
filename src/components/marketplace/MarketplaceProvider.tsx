@@ -1,66 +1,5 @@
 import React, { createContext, useContext, useReducer, ReactNode } from 'react';
-
-// Types
-export interface CartItem {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  quantity: number;
-  brand: string;
-  category: string;
-}
-
-export interface Product {
-  id: number;
-  name: string;
-  brand: string;
-  price: number;
-  originalPrice?: number;
-  image: string;
-  category: string;
-  rating: number;
-  reviews: number;
-  isNew?: boolean;
-  isBestSeller?: boolean;
-  discount?: number;
-  description?: string;
-  ingredients?: string[];
-  benefits?: string[];
-  usage?: string;
-  size?: string;
-  inStock?: boolean;
-}
-
-export interface OrderData {
-  id: string;
-  items: CartItem[];
-  total: number;
-  shippingAddress: {
-    name: string;
-    address: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    country: string;
-  };
-  paymentMethod: string;
-  email: string;
-  phone: string;
-  notes: string;
-  date: string;
-}
-
-// State
-interface MarketplaceState {
-  cart: CartItem[];
-  wishlist: number[];
-  orders: OrderData[];
-  currentOrder: OrderData | null;
-  isCartOpen: boolean;
-  isCheckoutOpen: boolean;
-  isOrderConfirmationOpen: boolean;
-}
+import type { Product, CartItem, OrderData, MarketplaceState } from '@/types';
 
 // Actions
 type MarketplaceAction =
@@ -335,5 +274,8 @@ export const useMarketplace = () => {
   }
   return context;
 };
+
+// Re-export types for backward compatibility
+export type { Product, CartItem, OrderData };
 
 export default MarketplaceProvider;

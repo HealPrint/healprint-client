@@ -1,19 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { authService, User, LoginCredentials, SignupData } from '../services/authService';
+import { authService } from '../services/authService';
 import { googleAuthService } from '../services/googleAuthService';
-
-interface AuthContextType {
-  user: User | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  login: (credentials: LoginCredentials) => Promise<void>;
-  signup: (userData: SignupData) => Promise<void>;
-  googleLogin: () => Promise<void>;
-  handleGoogleAuthSuccess: (userData: any) => void;
-  logout: () => void;
-  error: string | null;
-  clearError: () => void;
-}
+import type { User, LoginCredentials, SignupData, AuthContextType } from '@/types';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -85,23 +73,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const googleLogin = async () => {
-    setIsLoading(true);
     clearError();
     
     try {
-      // Initialize Google Auth if not already done
-      await googleAuthService.initializeGoogleAuth();
-      
-      // Use popup-based authentication
-      const userData = await googleAuthService.promptOneTap();
-      handleGoogleAuthSuccess(userData);
+      // Initiate backend-managed OAuth flow (will redirect user to Google)
+      await googleAuthService.initiateGoogleLogin();
+      // Note: User will be redirected, so code after this won't execute
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Google login failed';
       setError(errorMessage);
       console.error('Google login error:', err);
       throw err;
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -109,7 +91,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // Store the JWT token
     authService.setToken(userData.access_token);
     
-    // Set user data
+    // Set user data directly from the response (no need to fetch profile again)
     setUser({
       id: userData.id,
       email: userData.email,
@@ -132,23 +114,37 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       try {
         const token = authService.getToken();
         if (token) {
-          // Extract user ID from token (MongoDB ObjectId format)
-          const userId = token.replace('token_', '');
-          
-          // Add timeout to prevent hanging
-          const timeoutPromise = new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Auth check timeout')), 5000)
-          );
-          
-          const profilePromise = authService.getUserProfile(userId, token);
-          
+          // Try to decode JWT token to get user ID
           try {
-            const userProfile = await Promise.race([profilePromise, timeoutPromise]) as User;
-            setUser(userProfile);
-          } catch (timeoutError) {
-            console.warn('Auth check timed out, proceeding without authentication');
-            // Don't remove token on timeout, just proceed without setting user
-            // This allows the user to retry later if the API comes back online
+            // JWT tokens have 3 parts separated by dots
+            if (token.includes('.')) {
+              // It's a JWT token - decode the payload
+              const payload = JSON.parse(atob(token.split('.')[1]));
+              const userId = payload.sub; // 'sub' is the standard claim for user ID
+              
+              // Add timeout to prevent hanging
+              const timeoutPromise = new Promise((_, reject) => 
+                setTimeout(() => reject(new Error('Auth check timeout')), 5000)
+              );
+              
+              const profilePromise = authService.getUserProfile(userId, token);
+              
+              try {
+                const userProfile = await Promise.race([profilePromise, timeoutPromise]) as User;
+                setUser(userProfile);
+              } catch (timeoutError) {
+                console.warn('Auth check timed out, proceeding without authentication');
+                // Don't remove token on timeout, just proceed without setting user
+              }
+            } else {
+              // Old token format "token_{userId}"
+              const userId = token.replace('token_', '');
+              const userProfile = await authService.getUserProfile(userId, token);
+              setUser(userProfile);
+            }
+          } catch (decodeError) {
+            console.warn('Failed to decode token:', decodeError);
+            authService.removeToken();
           }
         }
       } catch (err) {

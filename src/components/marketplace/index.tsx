@@ -6,6 +6,6 @@ export { default as ProductCard } from './ProductCard';
 export { default as ProductFilters } from './ProductFilters';
 export { default as MarketplaceProvider, useMarketplace } from './MarketplaceProvider';
 
-// Export types
-export type { CartItem, Product, OrderData } from './MarketplaceProvider';
+// Export types from centralized types folder
+export type { CartItem, Product, OrderData } from '@/types';
 

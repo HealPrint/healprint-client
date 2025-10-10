@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { HealPrintService, ConversationSummary } from '../api/openaiService';
+import { HealPrintService } from '../api/openaiService';
+import type { ConversationSummary } from '@/types';
 
 export interface ChatConversation {
   id: string;

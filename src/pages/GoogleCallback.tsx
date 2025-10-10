@@ -16,8 +16,22 @@ const GoogleCallback: React.FC = () => {
       try {
         setIsLoading(true);
         
-        // Handle the OAuth callback
-        const userData = await googleAuthService.handleOAuthCallback();
+        // Extract authorization code and state from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const state = urlParams.get('state');
+        const error_param = urlParams.get('error');
+        
+        if (error_param) {
+          throw new Error(`OAuth error: ${error_param}`);
+        }
+        
+        if (!code) {
+          throw new Error('No authorization code received from Google');
+        }
+        
+        // Exchange code for user data via backend
+        const userData = await googleAuthService.handleCallback(code, state || undefined);
         
         // Store the JWT token and user data
         handleGoogleAuthSuccess(userData);

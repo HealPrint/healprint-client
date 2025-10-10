@@ -1,38 +1,8 @@
 import { config } from '../config';
+import type { User, LoginCredentials, SignupData, AuthResponse, ApiError } from '@/types';
 
 // Use the dedicated User/Auth API URL
 const API_BASE_URL = config.USER_API_URL;
-
-export interface User {
-  id: string;
-  email: string;
-  name: string;
-  age?: number;
-  country?: string;
-  created_at?: string;
-}
-
-export interface LoginCredentials {
-  email: string;
-  password: string;
-}
-
-export interface SignupData {
-  email: string;
-  password: string;
-  name: string;
-  age?: number;
-  country?: string;
-}
-
-export interface AuthResponse {
-  access_token: string;
-  token_type: string;
-}
-
-export interface ApiError {
-  detail: string;
-}
 
 class AuthService {
   private baseUrl: string;
