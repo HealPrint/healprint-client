@@ -1,5 +1,6 @@
 // HealPrint AI Backend Service Integration
 import { config } from '../config';
+import { authService } from '../services/authService';
 import type { ChatMessage, ChatResponse, Message, ConversationHistory, ConversationSummary } from '@/types';
 
 const API_BASE_URL = config.CHAT_API_URL;
@@ -7,6 +8,20 @@ const API_BASE_URL = config.CHAT_API_URL;
 export class HealPrintService {
   private static userId = 'user_' + Math.random().toString(36).substr(2, 9);
   private static currentConversationId: string | null = null;
+  
+  // Helper method to get auth headers
+  private static getAuthHeaders(): HeadersInit {
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+    // Token is now sent automatically via httpOnly cookie
+    // But we still check for backward compatibility with localStorage
+    const token = authService.getToken();
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    return headers;
+  }
   
   // Initialize user ID once and keep it consistent
   static {
@@ -29,9 +44,8 @@ export class HealPrintService {
     try {
       const response = await fetch(`${API_BASE_URL}/chat`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        credentials: 'include',  // Send cookies
+        headers: this.getAuthHeaders(),
         body: JSON.stringify({
           message,
           user_id: this.userId
@@ -65,7 +79,10 @@ export class HealPrintService {
 
   static async getConversationHistory(conversationId: string): Promise<ConversationHistory | null> {
     try {
-      const response = await fetch(`${API_BASE_URL}/conversation/${conversationId}`);
+      const response = await fetch(`${API_BASE_URL}/conversation/${conversationId}`, {
+        credentials: 'include',  // Send cookies
+        headers: this.getAuthHeaders(),
+      });
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -81,7 +98,10 @@ export class HealPrintService {
 
   static async getUserConversations(): Promise<ConversationSummary[]> {
     try {
-      const response = await fetch(`${API_BASE_URL}/conversations/${this.userId}`);
+      const response = await fetch(`${API_BASE_URL}/conversations/${this.userId}`, {
+        credentials: 'include',  // Send cookies
+        headers: this.getAuthHeaders(),
+      });
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -99,9 +119,8 @@ export class HealPrintService {
     try {
       const response = await fetch(`${API_BASE_URL}/conversations/new?user_id=${this.userId}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        credentials: 'include',  // Send cookies
+        headers: this.getAuthHeaders(),
       });
       
       if (!response.ok) {
@@ -122,9 +141,7 @@ export class HealPrintService {
     try {
       const response = await fetch(`${API_BASE_URL}/conversation/${conversationId}`, {
         method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: this.getAuthHeaders(),
       });
       
       if (!response.ok) {

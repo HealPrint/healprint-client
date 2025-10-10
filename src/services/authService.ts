@@ -15,6 +15,7 @@ class AuthService {
     try {
       const response = await fetch(`${this.baseUrl}/login`, {
         method: 'POST',
+        credentials: 'include',  // Send and receive cookies
         headers: {
           'Content-Type': 'application/json',
         },
@@ -64,6 +65,7 @@ class AuthService {
     try {
       const response = await fetch(`${this.baseUrl}/profile/${userId}`, {
         method: 'GET',
+        credentials: 'include',  // Send cookies
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
