@@ -42,6 +42,9 @@ class GoogleAuthService {
    */
   async handleCallback(code: string, state?: string): Promise<any> {
     try {
+      // Use consistent redirect URI (matches backend GOOGLE_REDIRECT_URI)
+      const redirectUri = import.meta.env.VITE_GOOGLE_REDIRECT_URI || 'https://healprint.xyz/auth/google/callback';
+      
       const response = await fetch(`${this.apiBaseUrl}/auth/google/callback`, {
         method: 'POST',
         headers: {
@@ -50,7 +53,7 @@ class GoogleAuthService {
         body: JSON.stringify({
           code,
           state,
-          redirect_uri: `${window.location.origin}/auth/google/callback`
+          redirect_uri: redirectUri
         }),
       });
 
