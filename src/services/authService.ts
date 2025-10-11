@@ -15,7 +15,6 @@ class AuthService {
     try {
       const response = await fetch(`${this.baseUrl}/login`, {
         method: 'POST',
-        credentials: 'include',  // Send and receive cookies
         headers: {
           'Content-Type': 'application/json',
         },
@@ -65,7 +64,6 @@ class AuthService {
     try {
       const response = await fetch(`${this.baseUrl}/profile/${userId}`, {
         method: 'GET',
-        credentials: 'include',  // Send cookies
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -80,45 +78,6 @@ class AuthService {
       return await response.json();
     } catch (error) {
       throw error;
-    }
-  }
-
-  async getCurrentUser(): Promise<User | null> {
-    try {
-      const response = await fetch(`${this.baseUrl}/auth/me`, {
-        method: 'GET',
-        credentials: 'include',  // Send httpOnly cookie
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        if (response.status === 401) {
-          // Not authenticated
-          return null;
-        }
-        throw new Error('Failed to fetch current user');
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.warn('getCurrentUser error:', error);
-      return null;
-    }
-  }
-
-  async logout(): Promise<void> {
-    try {
-      await fetch(`${this.baseUrl}/auth/logout`, {
-        method: 'POST',
-        credentials: 'include',  // Send cookie to be cleared
-      });
-    } catch (error) {
-      console.warn('Logout error:', error);
-    } finally {
-      // Always clear localStorage
-      this.removeToken();
     }
   }
 

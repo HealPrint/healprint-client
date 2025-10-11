@@ -6,11 +6,8 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Eye, EyeOff } from 'lucide-react';
 import { googleAuthService } from '../../services/googleAuthService';
-import { useGoogleOneTap } from '@/hooks/useGoogleOneTap';
 
 const Login = () => {
-  // Enable Google One Tap on login page
-  useGoogleOneTap(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [step, setStep] = useState(1); // 1 for email, 2 for password

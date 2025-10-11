@@ -102,48 +102,55 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     });
   };
 
-  const logout = async () => {
-    await authService.logout();
+  const logout = () => {
+    authService.removeToken();
     setUser(null);
     clearError();
   };
 
-  // Check for existing authentication on app load (via httpOnly cookie)
+  // Check for existing token on app load (runs in background)
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        // Check if user is authenticated via httpOnly cookie
-        const currentUser = await authService.getCurrentUser();
-        
-        if (currentUser) {
-          setUser(currentUser);
-        } else {
-          // Fallback: check localStorage for backward compatibility
-          const token = authService.getToken();
-          if (token) {
-            try {
-              // JWT tokens have 3 parts separated by dots
-              if (token.includes('.')) {
-                // It's a JWT token - decode the payload
-                const payload = JSON.parse(atob(token.split('.')[1]));
-                const userId = payload.sub; // 'sub' is the standard claim for user ID
-                
-                const userProfile = await authService.getUserProfile(userId, token);
+        const token = authService.getToken();
+        if (token) {
+          // Try to decode JWT token to get user ID
+          try {
+            // JWT tokens have 3 parts separated by dots
+            if (token.includes('.')) {
+              // It's a JWT token - decode the payload
+              const payload = JSON.parse(atob(token.split('.')[1]));
+              const userId = payload.sub; // 'sub' is the standard claim for user ID
+              
+              // Add timeout to prevent hanging
+              const timeoutPromise = new Promise((_, reject) => 
+                setTimeout(() => reject(new Error('Auth check timeout')), 5000)
+              );
+              
+              const profilePromise = authService.getUserProfile(userId, token);
+              
+              try {
+                const userProfile = await Promise.race([profilePromise, timeoutPromise]) as User;
                 setUser(userProfile);
-              } else {
-                // Old token format "token_{userId}"
-                const userId = token.replace('token_', '');
-                const userProfile = await authService.getUserProfile(userId, token);
-                setUser(userProfile);
+              } catch (timeoutError) {
+                console.warn('Auth check timed out, proceeding without authentication');
+                // Don't remove token on timeout, just proceed without setting user
               }
-            } catch (decodeError) {
-              console.warn('Failed to decode token:', decodeError);
-              authService.removeToken();
+            } else {
+              // Old token format "token_{userId}"
+              const userId = token.replace('token_', '');
+              const userProfile = await authService.getUserProfile(userId, token);
+              setUser(userProfile);
             }
+          } catch (decodeError) {
+            console.warn('Failed to decode token:', decodeError);
+            authService.removeToken();
           }
         }
       } catch (err) {
         console.warn('Auth check failed:', err);
+        // Token is invalid, remove it
+        authService.removeToken();
       } finally {
         setIsLoading(false);
         setIsInitialized(true);
